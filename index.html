@@ -17,6 +17,7 @@
   --bg:#f6f8f5; --surface:#ffffff; --ink:#14201b; --muted:#5a6b63; --line:#dfe6e1;
   --accent:#0e7a5f; --accent-hover:#0a634d; --accent-soft:#e4f3ec; --on-accent:#ffffff;
   --strong-bg:#0b4f3e; --strong-ink:#eaf6f0; --strong-btn-bg:#ffffff; --strong-btn-ink:#0b4f3e;
+  --foot-bg:#0a2e24; --foot-ink:#eaf6f0; --foot-muted:rgba(234,246,240,.7); --foot-line:rgba(234,246,240,.16);
   --header-bg:rgba(246,248,245,.9);
   --shadow:0 12px 32px -14px rgba(20,32,27,.2);
   --shadow-lg:0 30px 70px -28px rgba(11,79,62,.38);
@@ -30,6 +31,7 @@
     --bg:#0d1411; --surface:#151f1a; --ink:#e8f0ea; --muted:#9db0a5; --line:#26352d;
     --accent:#3dc79a; --accent-hover:#63dbb4; --accent-soft:#16312a; --on-accent:#062a1f;
     --strong-bg:#1a4538; --strong-ink:#e8f6ef; --strong-btn-bg:#e8f6ef; --strong-btn-ink:#0f2f25;
+    --foot-bg:#080e0b; --foot-ink:#e8f0ea; --foot-muted:rgba(232,240,234,.66); --foot-line:rgba(232,240,234,.14);
     --header-bg:rgba(13,20,17,.88);
     --shadow:0 12px 32px -14px rgba(0,0,0,.6);
     --shadow-lg:0 30px 70px -28px rgba(0,0,0,.75);
@@ -40,6 +42,7 @@
   --bg:#0d1411; --surface:#151f1a; --ink:#e8f0ea; --muted:#9db0a5; --line:#26352d;
   --accent:#3dc79a; --accent-hover:#63dbb4; --accent-soft:#16312a; --on-accent:#062a1f;
   --strong-bg:#1a4538; --strong-ink:#e8f6ef; --strong-btn-bg:#e8f6ef; --strong-btn-ink:#0f2f25;
+  --foot-bg:#080e0b; --foot-ink:#e8f0ea; --foot-muted:rgba(232,240,234,.66); --foot-line:rgba(232,240,234,.14);
   --header-bg:rgba(13,20,17,.88);
   --shadow:0 12px 32px -14px rgba(0,0,0,.6);
   --shadow-lg:0 30px 70px -28px rgba(0,0,0,.75);
@@ -53,10 +56,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 a{color:inherit}
 img,svg{max-width:100%}
 h1,h2,h3,p{margin:0}
-ul{margin:0;padding:0;list-style:none}
+ul,ol{margin:0;padding:0;list-style:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
 .wrap{width:min(1160px,100% - 40px);margin-inline:auto}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ===== 3. Шапка ===== */
 .site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--header-bg);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
@@ -70,9 +72,9 @@ ul{margin:0;padding:0;list-style:none}
 .brand-name b{color:var(--accent);font-weight:700}
 .brand-slogan{display:block;margin-top:2px;font-size:.74rem;line-height:1.2;color:var(--muted);white-space:nowrap}
 .nav-wrap{display:contents}
-.nav{display:flex;gap:4px;margin-inline:auto}
+.nav{display:flex;flex:none;gap:4px;margin-inline:auto}
 .nav-item{position:relative}
-.nav-link{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;font-size:.97rem;font-weight:500;line-height:1.2;text-decoration:none;cursor:pointer;transition:background .15s}
+.nav-link{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;font-size:.97rem;font-weight:500;line-height:1.2;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background .15s}
 .nav-link:hover,.nav-item.open>.nav-link{background:var(--accent-soft)}
 .chev{width:14px;height:14px;flex:none;transition:transform .2s}
 .nav-item.open .chev{transform:rotate(180deg)}
@@ -109,7 +111,7 @@ ul{margin:0;padding:0;list-style:none}
 .hero{padding:clamp(44px,8vw,96px) 0 clamp(36px,6vw,64px);text-align:center}
 .hero h1{max-width:15ch;margin-inline:auto;font-size:clamp(2.3rem,5.6vw,4.1rem);font-weight:700;letter-spacing:-.035em;line-height:1.06;text-wrap:balance}
 .hero-lead{max-width:62ch;margin:22px auto 0;font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--muted);text-wrap:pretty}
-.search{position:relative;display:grid;grid-template-columns:1.5fr 1fr 1fr auto;max-width:1040px;margin:44px auto 0;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);text-align:left}
+.search{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.15fr) minmax(0,.95fr) auto;max-width:1040px;margin:44px auto 0;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);text-align:left}
 .field{position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0;padding:11px 20px;border-radius:15px;transition:background .15s}
 .field+.field::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--line)}
 .field:focus-within{background:var(--accent-soft)}
@@ -132,7 +134,7 @@ ul{margin:0;padding:0;list-style:none}
 .quick{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 36px;margin-top:14px}
 .quick a{padding:6px 0;border-bottom:1px solid var(--line);font-weight:500;text-decoration:none;transition:border-color .15s,color .15s}
 .quick a:hover{color:var(--accent-hover);border-color:var(--accent)}
-@media (max-width:900px){
+@media (max-width:960px){
   .search{grid-template-columns:1fr;border-radius:20px}
   .field+.field::before{left:20px;right:20px;top:0;bottom:auto;width:auto;height:1px}
   .field .chev{bottom:auto;top:50%;margin-top:-5px}
@@ -159,6 +161,9 @@ ul{margin:0;padding:0;list-style:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;min-height:52px;padding:0 28px;border:1.5px solid var(--accent);border-radius:14px;font-weight:600;text-decoration:none;transition:background .15s,color .15s,border-color .15s}
 .btn-primary{background:var(--accent);color:var(--on-accent)}
 .btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn-outline{color:var(--accent)}
+.btn-outline:hover{background:var(--accent-soft)}
+.btn-sm{align-self:center;min-height:44px;margin-top:0;padding:0 22px;font-size:.95rem}
 .card--strong{background:var(--strong-bg);border-color:var(--strong-bg);color:var(--strong-ink)}
 .card--strong .card-icon{background:rgba(255,255,255,.14);color:var(--strong-ink)}
 .card--strong .card-tag{border-color:rgba(255,255,255,.3);color:var(--strong-ink)}
@@ -167,6 +172,62 @@ ul{margin:0;padding:0;list-style:none}
 .card--strong .btn{background:var(--strong-btn-bg);border-color:var(--strong-btn-bg);color:var(--strong-btn-ink)}
 .card--strong .btn:hover{opacity:.88}
 @media (max-width:860px){.cards{grid-template-columns:1fr}}
+
+/* ===== 6. Актуальные предложения (витрина вакансий) ===== */
+.showcase{padding:0 0 clamp(56px,8vw,104px)}
+.jobs{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.job{display:flex;flex-direction:column;padding:clamp(22px,3vw,32px);border:1px solid var(--line);border-radius:22px;background:var(--surface);transition:border-color .15s,box-shadow .15s}
+.job:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.job h3{font-size:1.25rem;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:10px 24px;margin:22px 0 28px;padding-top:20px;border-top:1px solid var(--line)}
+.facts div{display:contents}
+.facts dt{font-size:.88rem;color:var(--muted)}
+.facts dd{margin:0;font-weight:500}
+.job-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:auto}
+.job-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent-hover);font-size:.84rem;font-weight:500}
+.job-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.job-foot .btn{margin-left:auto}
+.more{display:flex;justify-content:center;margin-top:40px}
+.more .btn{align-self:auto;margin-top:0}
+@media (max-width:760px){.jobs{grid-template-columns:1fr}}
+
+/* ===== 7. Как устроен безопасный тест-драйв ===== */
+.testdrive{padding:clamp(56px,8vw,96px) 0;background:var(--surface);border-block:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.steps li{position:relative}
+.steps li:not(:last-child)::after{content:"";position:absolute;top:21px;left:60px;right:-18px;height:2px;background:var(--line)}
+.step-num{display:grid;place-items:center;width:44px;height:44px;margin-bottom:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:1.1rem;font-weight:700}
+.steps h3{font-size:1.25rem;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.steps p{margin-top:10px;color:var(--muted);text-wrap:pretty}
+.td-note{margin-top:40px;color:var(--muted);font-size:.95rem}
+.td-note a{color:var(--ink);font-weight:500;text-underline-offset:4px}
+.td-note a:hover{color:var(--accent-hover)}
+@media (max-width:760px){
+  .steps{grid-template-columns:1fr;gap:0}
+  .steps li{padding:0 0 32px 62px}
+  .steps li:last-child{padding-bottom:0}
+  .steps li:not(:last-child)::after{top:52px;bottom:8px;left:21px;right:auto;width:2px;height:auto}
+  .step-num{position:absolute;left:0;top:0;margin:0}
+}
+
+/* ===== 8. Подвал ===== */
+.site-footer{padding-top:clamp(44px,6vw,72px);background:var(--foot-bg);color:var(--foot-ink)}
+.site-footer :focus-visible{outline-color:var(--foot-ink)}
+.site-footer .brand-mark .bg{fill:var(--foot-ink)}
+.site-footer .brand-mark .dot{fill:var(--foot-bg)}
+.site-footer .brand-mark .link{stroke:var(--foot-bg)}
+.site-footer .brand-name b{color:#6fe0b9}
+.site-footer .brand-slogan{color:var(--foot-muted)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.foot-about p{max-width:36ch;margin-top:16px;color:var(--foot-muted);font-size:.95rem}
+.site-footer h2{margin-bottom:16px;font-size:.95rem;font-weight:600}
+.foot-list{display:grid;gap:10px;font-size:.95rem;color:var(--foot-muted)}
+.foot-list a{text-decoration:none;transition:color .15s}
+.foot-list a:hover{color:var(--foot-ink);text-decoration:underline;text-underline-offset:4px}
+.foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 32px;margin-top:clamp(36px,5vw,56px);padding:22px 0;border-top:1px solid var(--foot-line);color:var(--foot-muted);font-size:.85rem}
+@media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}.foot-about{grid-column:1/-1}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms!important}
@@ -323,11 +384,151 @@ ul{margin:0;padding:0;list-style:none}
   </div>
 </section>
 
-<!-- ===== СЛЕДУЮЩИЙ ШАГ: нижняя половина Главной (блоки 4+) добавляется здесь, внутри <main> ===== -->
+<!-- ===== АКТУАЛЬНЫЕ ПРЕДЛОЖЕНИЯ ПО ВСЕЙ РБ ===== -->
+<section class="showcase" id="offers" aria-labelledby="offers-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="offers-title">Актуальные предложения по всей РБ</h2>
+      <p>Так выглядят вакансии в каталоге: формат работы и география всегда указаны явно. Это демонстрационные примеры, реальные вакансии появятся после запуска каталога.</p>
+    </div>
+
+    <div class="jobs">
+      <article class="job">
+        <h3>Удалённый бухгалтер (ведение УСН)</h3>
+        <dl class="facts">
+          <div><dt>Формат работы</dt><dd>Удалённо по всей РБ</dd></div>
+          <div><dt>География</dt><dd>Вся Беларусь</dd></div>
+          <div><dt>Кластер (ОКРБ)</dt><dd>Бухгалтерия</dd></div>
+        </dl>
+        <div class="job-foot">
+          <span class="job-badge">Доступен тест-драйв</span>
+          <a class="btn btn-primary btn-sm" href="catalog.html?cluster=accounting&amp;format=remote&amp;geo=all">Откликнуться</a>
+        </div>
+      </article>
+
+      <article class="job">
+        <h3>Юрисконсульт по договорной работе</h3>
+        <dl class="facts">
+          <div><dt>Формат работы</dt><dd>Гибрид</dd></div>
+          <div><dt>География</dt><dd>Минск</dd></div>
+          <div><dt>Кластер (ОКРБ)</dt><dd>Юриспруденция</dd></div>
+        </dl>
+        <div class="job-foot">
+          <a class="btn btn-outline btn-sm" href="catalog.html?cluster=law&amp;format=hybrid&amp;geo=minsk">Подробнее</a>
+        </div>
+      </article>
+
+      <article class="job">
+        <h3>Специалист по работе с клиентами</h3>
+        <dl class="facts">
+          <div><dt>Формат работы</dt><dd>Удалённо по всей РБ</dd></div>
+          <div><dt>География</dt><dd>Вся Беларусь</dd></div>
+          <div><dt>Кластер (ОКРБ)</dt><dd>Офис</dd></div>
+        </dl>
+        <div class="job-foot">
+          <a class="btn btn-primary btn-sm" href="catalog.html?cluster=office&amp;format=remote&amp;geo=all">Откликнуться</a>
+        </div>
+      </article>
+
+      <article class="job">
+        <h3>Главный бухгалтер (удалённо / гибрид)</h3>
+        <dl class="facts">
+          <div><dt>Формат работы</dt><dd>Удалённо по всей РБ или гибрид</dd></div>
+          <div><dt>География</dt><dd>Вся Беларусь, для гибрида — Минск</dd></div>
+          <div><dt>Кластер (ОКРБ)</dt><dd>Бухгалтерия</dd></div>
+        </dl>
+        <div class="job-foot">
+          <span class="job-badge">Доступен тест-драйв</span>
+          <a class="btn btn-outline btn-sm" href="catalog.html?cluster=accounting&amp;format=hybrid&amp;geo=all">Подробнее</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="more">
+      <a class="btn btn-outline" href="catalog.html">Смотреть все вакансии в каталоге →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== КАК УСТРОЕН БЕЗОПАСНЫЙ ТЕСТ-ДРАЙВ ===== -->
+<section class="testdrive" id="how-test-drive" aria-labelledby="td-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="td-title">Как устроен безопасный тест-драйв специалиста</h2>
+      <p>Проверьте специалиста в деле до того, как оформлять его в штат.</p>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <span class="step-num" aria-hidden="true">1</span>
+        <h3>Заявка и отбор по всей РБ</h3>
+        <p>Определяем задачу и отбираем подходящих кандидатов по профилю без привязки к одному городу.</p>
+      </li>
+      <li>
+        <span class="step-num" aria-hidden="true">2</span>
+        <h3>Пробный период (1 месяц)</h3>
+        <p>Специалист выполняет согласованный объём работ по договору оказания услуг или срочному договору с гарантией замены.</p>
+      </li>
+      <li>
+        <span class="step-num" aria-hidden="true">3</span>
+        <h3>Спокойный переход в штат</h3>
+        <p>Если специалист полностью подходит команде, вы оформляете его к себе на постоянную работу.</p>
+      </li>
+    </ol>
+
+    <p class="td-note">Условия пробного периода согласуются заранее и закрепляются договором. <a href="employers.html#test-drive">Подробнее о тест-драйве →</a></p>
+  </div>
+</section>
 
 </main>
 
-<!-- ===== ПОДВАЛ: добавляется после </main> ===== -->
+<!-- ===== ПОДВАЛ ===== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="index.html" aria-label="hrhub.by — на главную">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect class="bg" width="40" height="40" rx="11"/>
+            <path class="link" d="M14 15l13-2M14 15l7 12M27 13l-6 14"/>
+            <circle class="dot" cx="14" cy="15" r="3.4"/>
+            <circle class="dot" cx="27" cy="13" r="2.8"/>
+            <circle class="dot" cx="21" cy="27" r="3.4"/>
+          </svg>
+          <span>
+            <span class="brand-name">hrhub<b>.by</b></span>
+            <span class="brand-slogan">Кадровая экосистема Беларуси</span>
+          </span>
+        </a>
+        <p>Вакансии, резюме и подбор персонала по всей Беларуси — с акцентом на удалённый и гибридный форматы.</p>
+      </div>
+
+      <nav aria-label="Разделы сайта">
+        <h2>Разделы</h2>
+        <ul class="foot-list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="catalog.html">Каталог</a></li>
+          <li><a href="employers.html">Работодателям / HR-сопровождение</a></li>
+          <li><a href="about.html">О проекте и правила</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2>Контакты</h2>
+        <ul class="foot-list">
+          <li>Республика Беларусь</li>
+          <!-- Заменить на реальный адрес перед публикацией -->
+          <li><a href="mailto:info@hrhub.by">info@hrhub.by</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> hrhub.by. Все права защищены.</span>
+      <span>При работе с персональными данными соблюдаем законодательство Республики Беларусь.</span>
+    </div>
+  </div>
+</footer>
 
 <script>
 (() => {
@@ -490,6 +691,10 @@ ul{margin:0;padding:0;list-style:none}
     if (o) pick(o);
   });
   $('#searchBtn').addEventListener('click', doSearch);
+
+  /* ---------- Подвал: текущий год ---------- */
+  const year = $('#year');
+  if (year) year.textContent = new Date().getFullYear();
 })();
 </script>
 </body>
