@@ -152,6 +152,14 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
 .combo-opt{display:flex;align-items:baseline;justify-content:space-between;gap:12px;width:100%;padding:10px 12px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
 .combo-opt:hover,.combo-opt:focus-visible{background:var(--accent-soft)}
 .combo-opt small{color:var(--muted);white-space:nowrap}
+.combo-row{position:relative}
+.combo-opt--note{display:block;padding:9px 12px 10px}
+.opt-head{display:block;font-weight:500}
+.opt-code{color:var(--muted);font-variant-numeric:tabular-nums}
+.opt-note{display:block;height:1.45em;margin-top:2px;padding-right:80px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--muted);font-size:.84rem;line-height:1.45;transition:height .25s ease}
+.combo-row.is-open .opt-note{white-space:normal;text-overflow:clip}
+.combo-more{position:absolute;right:10px;bottom:9px;padding:2px 9px;border:0;border-radius:8px;background:var(--accent-soft);color:var(--accent-hover);font:inherit;font-size:.78rem;font-weight:600;cursor:pointer}
+.combo-more:hover{background:var(--line)}
 .combo-msg{padding:10px 12px;color:var(--muted);font-size:.92rem}
 .combo-note{margin:8px 2px 0;font-size:.88rem;color:var(--muted)}
 .combo-note.is-error{color:var(--danger)}
@@ -502,6 +510,40 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       }
       const hay = items.map(it => norm(it.text + ' ' + (it.meta || '')));
       const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); };
+      const rowHtml = i => {
+        const it = items[i];
+        if (!it.note) return '<li><button type="button" class="combo-opt" data-i="' + i + '"><span>' + esc(it.text) + '</span>' + (it.meta ? '<small>' + esc(it.meta) + '</small>' : '') + '</button></li>';
+        return '<li class="combo-row"><button type="button" class="combo-opt combo-opt--note" data-i="' + i + '" title="' + esc('Пояснение: ' + it.note) + '">' +
+          '<span class="opt-head">' + esc(it.text) + '<span class="opt-code"> · ' + esc(it.meta) + '</span></span>' +
+          '<span class="opt-note">' + esc(it.note) + '</span></button>' +
+          '<button type="button" class="combo-more" aria-expanded="false" aria-label="Показать полное пояснение" hidden>ещё ▾</button></li>';
+      };
+      const markTruncated = () => $$('.combo-row:not(.is-open)', list).forEach(row => {
+        const n = $('.opt-note', row);
+        $('.combo-more', row).hidden = !(n.scrollWidth > n.clientWidth);
+      });
+      const toggleRow = row => {
+        const n = $('.opt-note', row), b = $('.combo-more', row);
+        const opening = !row.classList.contains('is-open');
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          n.removeEventListener('transitionend', finish);
+          if (opening) n.style.height = 'auto';
+          else { row.classList.remove('is-open'); n.style.height = ''; }
+        };
+        if (opening) row.dataset.h = n.offsetHeight;
+        const start = n.offsetHeight;
+        n.style.height = start + 'px';
+        if (opening) row.classList.add('is-open');
+        void n.offsetHeight;
+        n.style.height = (opening ? n.scrollHeight : (Number(row.dataset.h) || start)) + 'px';
+        b.textContent = opening ? 'свернуть ▴' : 'ещё ▾';
+        b.setAttribute('aria-expanded', String(opening));
+        n.addEventListener('transitionend', finish);
+        setTimeout(finish, 400);
+      };
       const open = () => {
         if (current) return;
         const raw = input.value.trim(), toks = tokens(raw);
@@ -512,13 +554,13 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
           const rows = [];
           items.forEach((it, i) => { if (toks.every(t => hay[i].includes(t))) rows.push(i); });
           html = rows.length
-            ? rows.slice(0, 8).map(i => '<li><button type="button" class="combo-opt" data-i="' + i + '"><span>' + esc(items[i].text) + '</span>' +
-                (items[i].meta ? '<small>' + esc(items[i].meta) + '</small>' : '') + '</button></li>').join('') +
+            ? rows.slice(0, 8).map(rowHtml).join('') +
               (rows.length > 8 ? '<li class="combo-msg">Показаны первые 8 из ' + rows.length + '. Уточните запрос.</li>' : '')
             : '<li class="combo-msg">Ничего не найдено. Попробуйте другие фрагменты слов.</li>';
         }
         list.innerHTML = html;
         list.hidden = false;
+        markTruncated();
         input.setAttribute('aria-expanded', 'true');
       };
       const setError = msg => {
@@ -559,9 +601,12 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       });
       list.addEventListener('mousedown', e => e.preventDefault());
       list.addEventListener('click', e => {
+        const m = e.target.closest('.combo-more');
+        if (m) { toggleRow(m.closest('.combo-row')); return; }
         const b = e.target.closest('.combo-opt');
         if (b) select(Number(b.dataset.i));
       });
+      window.addEventListener('resize', () => { if (!list.hidden) markTruncated(); });
       list.addEventListener('keydown', e => {
         if (e.key === 'Escape') { close(); input.focus(); return; }
         if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
@@ -576,7 +621,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       return { get: () => current, select, reset, setError };
     };
 
-    const jobCombo = makeCombo($('#comboJob'), OKRB.map(x => ({ text: x.title, meta: x.code, data: x })), {
+    const jobCombo = makeCombo($('#comboJob'), OKRB.map(x => ({ text: x.title, meta: x.code, note: x.note || '', data: x })), {
       missing: 'Не удалось загрузить справочник. Проверьте, что файл okrb-data.js лежит рядом с этой страницей.',
       detail: it => it.data.issue + '. Направление: ' + it.data.cluster + '.'
     });
