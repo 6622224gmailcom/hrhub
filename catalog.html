@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Каталог вакансий и резюме hrhub.by: поиск по точной должности ОКРБ 014-2017, удалённая работа по всей Беларуси, пробный период Тест-драйв 1 месяц.">
+<title>Каталог вакансий и резюме — hrhub.by</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap">
+<style>
+/* ===== 1. Токены (светлая / тёмная тема) ===== */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  color-scheme:light;
+  --bg:#f6f8f5; --surface:#ffffff; --ink:#14201b; --muted:#5a6b63; --line:#dfe6e1;
+  --accent:#0e7a5f; --accent-hover:#0a634d; --accent-soft:#e4f3ec; --on-accent:#ffffff;
+  --strong-bg:#0b4f3e; --strong-ink:#eaf6f0; --strong-btn-bg:#ffffff; --strong-btn-ink:#0b4f3e;
+  --foot-bg:#0a2e24; --foot-ink:#eaf6f0; --foot-muted:rgba(234,246,240,.7); --foot-line:rgba(234,246,240,.16);
+  --header-bg:rgba(246,248,245,.9);
+  --shadow:0 12px 32px -14px rgba(20,32,27,.2);
+  --shadow-lg:0 30px 70px -28px rgba(11,79,62,.38);
+  --header-h:72px;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0d1411; --surface:#151f1a; --ink:#e8f0ea; --muted:#9db0a5; --line:#26352d;
+    --accent:#3dc79a; --accent-hover:#63dbb4; --accent-soft:#16312a; --on-accent:#062a1f;
+    --strong-bg:#1a4538; --strong-ink:#e8f6ef; --strong-btn-bg:#e8f6ef; --strong-btn-ink:#0f2f25;
+    --foot-bg:#080e0b; --foot-ink:#e8f0ea; --foot-muted:rgba(232,240,234,.66); --foot-line:rgba(232,240,234,.14);
+    --header-bg:rgba(13,20,17,.88);
+    --shadow:0 12px 32px -14px rgba(0,0,0,.6);
+    --shadow-lg:0 30px 70px -28px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d1411; --surface:#151f1a; --ink:#e8f0ea; --muted:#9db0a5; --line:#26352d;
+  --accent:#3dc79a; --accent-hover:#63dbb4; --accent-soft:#16312a; --on-accent:#062a1f;
+  --strong-bg:#1a4538; --strong-ink:#e8f6ef; --strong-btn-bg:#e8f6ef; --strong-btn-ink:#0f2f25;
+  --foot-bg:#080e0b; --foot-ink:#e8f0ea; --foot-muted:rgba(232,240,234,.66); --foot-line:rgba(232,240,234,.14);
+  --header-bg:rgba(13,20,17,.88);
+  --shadow:0 12px 32px -14px rgba(0,0,0,.6);
+  --shadow-lg:0 30px 70px -28px rgba(0,0,0,.75);
+}
+
+/* ===== 2. База ===== */
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--header-h) + 12px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Onest",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--header-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);z-index:10}
+[hidden]{display:none!important}
+a{color:inherit}
+img,svg{max-width:100%}
+h1,h2,h3,p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== 3. Шапка ===== */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--header-bg);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.header-inner{display:flex;align-items:center;gap:24px;min-height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
+.brand-mark{width:38px;height:38px;flex:none}
+.brand-mark .bg{fill:var(--accent)}
+.brand-mark .dot{fill:var(--on-accent)}
+.brand-mark .link{stroke:var(--on-accent);stroke-width:1.6;stroke-linecap:round;opacity:.6;fill:none}
+.brand-name{display:block;font-weight:700;font-size:1.28rem;letter-spacing:-.025em;line-height:1.1}
+.brand-name b{color:var(--accent);font-weight:700}
+.brand-slogan{display:block;margin-top:2px;font-size:.74rem;line-height:1.2;color:var(--muted);white-space:nowrap}
+.nav-wrap{display:contents}
+.nav{display:flex;flex:none;gap:4px;margin-inline:auto}
+.nav-item{position:relative}
+.nav-link{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;font-size:.97rem;font-weight:500;line-height:1.2;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background .15s}
+.nav-link:hover,.nav-item.open>.nav-link{background:var(--accent-soft)}
+.chev{width:14px;height:14px;flex:none;transition:transform .2s}
+.nav-item.open .chev{transform:rotate(180deg)}
+.dropdown{position:absolute;top:calc(100% + 8px);left:50%;min-width:284px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .16s,transform .16s,visibility .16s}
+.nav-item.open>.dropdown{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.dropdown a{display:block;padding:11px 14px;border-radius:10px;font-size:.95rem;text-decoration:none}
+.dropdown a:hover{background:var(--accent-soft);color:var(--accent-hover)}
+.region{display:inline-flex;gap:2px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--accent-soft);flex:none}
+.region-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:0;border-radius:999px;background:none;color:var(--muted);font:inherit;font-size:.86rem;font-weight:500;white-space:nowrap}
+.region-btn[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.region-btn:disabled{cursor:not-allowed;opacity:.8}
+.soon{padding:1px 8px;border-radius:999px;background:var(--line);font-size:.72rem;font-weight:600;color:var(--muted)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer;align-items:center;justify-content:center}
+.burger span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;position:relative;transition:background .15s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .2s}
+.burger span::before{top:-6px}
+.burger span::after{top:6px}
+.burger[aria-expanded="true"] span{background:transparent}
+.burger[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg)}
+@media (max-width:1040px){
+  .burger{display:inline-flex}
+  .nav-wrap{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;gap:16px;padding:12px 20px 22px;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:calc(100vh - var(--header-h) - env(safe-area-inset-top,0px));max-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top,0px));overflow-y:auto}
+  .nav-wrap.open{display:flex}
+  .nav-wrap nav{width:100%}
+  .nav{flex-direction:column;gap:2px;margin:0}
+  .nav-link{width:100%;justify-content:space-between;padding:13px 12px}
+  .dropdown{position:static;display:none;min-width:0;padding:0 0 6px 12px;border:0;box-shadow:none;background:none;opacity:1;visibility:visible;transform:none}
+  .nav-item.open>.dropdown{display:block;transform:none}
+}
+@media (max-width:400px){.brand-slogan{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;margin-top:auto;min-height:52px;padding:0 28px;border:1.5px solid var(--accent);border-radius:14px;font-weight:600;text-decoration:none;transition:background .15s,color .15s,border-color .15s}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+
+/* ===== 8. Кабинет работодателя ===== */
+:root{--danger:#b3261e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--danger:#ff8a80}}
+:root[data-theme="dark"]{--danger:#ff8a80}
+.narrow{width:min(860px,100% - 40px)}
+.page-head{padding:clamp(40px,6vw,72px) 0 clamp(20px,3vw,32px)}
+.page-head h1{font-size:clamp(2rem,4.6vw,3.2rem);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.page-head p{max-width:62ch;margin-top:16px;font-size:1.1rem;color:var(--muted);text-wrap:pretty}
+.emp{padding:0 0 clamp(56px,8vw,104px)}
+.panel{margin-bottom:24px;padding:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:24px;background:var(--surface)}
+.panel-title{margin-bottom:20px;font-size:1.25rem;font-weight:700;letter-spacing:-.015em}
+.note{margin-top:14px;color:var(--muted);font-size:.95rem}
+.field{margin-bottom:24px}
+.label{display:block;margin-bottom:8px;font-size:.95rem;font-weight:600}
+.inp{width:100%;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:inherit;font-weight:500;transition:border-color .15s}
+.inp:focus{border-color:var(--accent);outline:0}
+textarea.inp{min-height:130px;resize:vertical;font-weight:400}
+.inp::placeholder{color:var(--muted);font-weight:400;opacity:.8}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:16px;align-items:start}
+.field-error{margin:8px 2px 0;font-size:.88rem;color:var(--danger)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg-opt{position:relative}
+.seg-opt input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.seg-opt span{display:block;padding:11px 18px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-weight:500;transition:background .15s,border-color .15s}
+.seg-opt input:checked+span{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.seg-opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:3px}
+.geo-fixed{display:inline-block;padding:11px 18px;border:1px solid var(--accent);border-radius:12px;background:var(--accent-soft);font-weight:600}
+.combo{position:relative}
+.combo-box{display:flex;align-items:center;gap:10px;padding:0 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);transition:border-color .15s,background .15s}
+.combo-box:focus-within{border-color:var(--accent)}
+.combo.is-locked .combo-box{border-color:var(--accent);background:var(--accent-soft)}
+.combo-box input{flex:1;min-width:0;padding:13px 0;border:0;background:transparent;color:var(--ink);font:inherit;font-weight:500;outline:0}
+.combo-box input::placeholder{color:var(--muted);font-weight:400;opacity:.8}
+.combo-code{padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.82rem;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.link-btn{padding:6px 4px;border:0;background:none;color:var(--accent);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.link-btn:hover{color:var(--accent-hover);text-decoration:underline}
+.combo-list{position:absolute;z-index:20;top:calc(100% + 6px);left:0;right:0;max-height:320px;overflow-y:auto;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.combo-opt{display:flex;align-items:baseline;justify-content:space-between;gap:12px;width:100%;padding:10px 12px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.combo-opt:hover,.combo-opt:focus-visible{background:var(--accent-soft)}
+.combo-opt small{color:var(--muted);white-space:nowrap}
+.combo-row{position:relative}
+.combo-opt--note{display:block;padding:9px 12px 10px}
+.opt-head{display:block;font-weight:500}
+.opt-code{color:var(--muted);font-variant-numeric:tabular-nums}
+.opt-note{display:block;height:1.45em;margin-top:2px;padding-right:80px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--muted);font-size:.84rem;line-height:1.45;transition:height .25s ease}
+.combo-row.is-open .opt-note{white-space:normal;text-overflow:clip}
+.combo-more{position:absolute;right:10px;bottom:9px;padding:2px 9px;border:0;border-radius:8px;background:var(--accent-soft);color:var(--accent-hover);font:inherit;font-size:.78rem;font-weight:600;cursor:pointer}
+.combo-more:hover{background:var(--line)}
+.combo-msg{padding:10px 12px;color:var(--muted);font-size:.92rem}
+.combo-note{margin:8px 2px 0;font-size:.88rem;color:var(--muted)}
+.combo-note.is-error{color:var(--danger)}
+.switch{position:relative;display:flex;align-items:flex-start;gap:14px;margin-bottom:24px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--bg);cursor:pointer}
+.switch input{position:absolute;opacity:0}
+.switch-track{position:relative;flex:none;width:44px;height:26px;margin-top:2px;border-radius:999px;background:var(--line);transition:background .15s}
+.switch-track::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.switch input:checked+.switch-track{background:var(--accent)}
+.switch input:checked+.switch-track::after{transform:translateX(18px)}
+.switch input:focus-visible+.switch-track{outline:2px solid var(--accent);outline-offset:3px}
+.switch strong{display:block;font-weight:600}
+.switch small{color:var(--muted);font-size:.9rem}
+.plate{margin-bottom:24px;padding:14px 18px;border-left:3px solid var(--accent);border-radius:12px;background:var(--accent-soft);font-size:.93rem}
+.status-ok{margin-top:16px;color:var(--accent-hover);font-weight:500}
+.tag{padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-hover);font-size:.8rem;font-weight:500}
+@media (max-width:720px){.grid-3{grid-template-columns:1fr}}
+
+/* ===== 9. Каталог: вкладки, фильтры, карточки, окно отклика ===== */
+.tabs{display:flex;gap:6px;margin-bottom:28px;border-bottom:1px solid var(--line)}
+.tab{margin-bottom:-1px;padding:14px 22px;border:0;border-bottom:3px solid transparent;background:none;color:var(--muted);font:inherit;font-size:1.02rem;font-weight:600;cursor:pointer;transition:color .15s,border-color .15s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--ink)}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
+.span2{grid-column:1/-1}
+.results-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;margin:8px 4px 16px}
+.results-count{font-weight:600}
+.results-note{color:var(--muted);font-size:.9rem}
+.vac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+.vac{display:flex;flex-direction:column;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--surface);transition:border-color .15s,box-shadow .15s}
+.vac:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.vac h3{font-size:1.15rem;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.vac dl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:18px 0 20px;padding-top:16px;border-top:1px solid var(--line)}
+.vac dl div{display:contents}
+.vac dt{font-size:.86rem;color:var(--muted)}
+.vac dd{margin:0;font-weight:500}
+.vac-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px;margin-top:auto}
+.btn-sm{align-self:center;min-height:44px;margin-top:0;padding:0 22px;font-size:.95rem}
+.btn-line{background:none;border-color:var(--line);color:var(--ink)}
+.btn-line:hover{border-color:var(--accent)}
+.empty{padding:32px;border:1px dashed var(--line);border-radius:20px;text-align:center}
+.empty p{max-width:52ch;margin:0 auto 18px;color:var(--muted)}
+.form-narrow{max-width:860px}
+.chips-sel{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip-sel{display:inline-flex;align-items:center;gap:8px;padding:6px 8px 6px 14px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);font-size:.9rem;font-weight:500}
+.chip-sel button{padding:0 4px;border:0;background:none;color:var(--muted);font:inherit;font-size:1.15rem;line-height:1;cursor:pointer}
+.submit-note{margin-top:14px;color:var(--muted);font-size:.88rem}
+.check{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:.93rem;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--accent)}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(8,14,11,.55)}
+.modal-box{width:min(460px,100%);max-height:100%;overflow-y:auto;padding:28px;border-radius:24px;background:var(--surface);box-shadow:var(--shadow-lg)}
+.modal-box h2{font-size:1.3rem;font-weight:700;letter-spacing:-.015em;line-height:1.25}
+.modal-box .sub{margin:6px 0 20px;color:var(--muted);font-size:.95rem}
+.modal-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.done-title{font-size:1.15rem;font-weight:600}
+@media (max-width:720px){.filters{grid-template-columns:1fr}.tab{padding:12px 14px;font-size:.95rem}}
+
+/* ===== 7. Подвал ===== */
+.site-footer{padding-top:clamp(44px,6vw,72px);background:var(--foot-bg);color:var(--foot-ink)}
+.site-footer :focus-visible{outline-color:var(--foot-ink)}
+.site-footer .brand-mark .bg{fill:var(--foot-ink)}
+.site-footer .brand-mark .dot{fill:var(--foot-bg)}
+.site-footer .brand-mark .link{stroke:var(--foot-bg)}
+.site-footer .brand-name b{color:#6fe0b9}
+.site-footer .brand-slogan{color:var(--foot-muted)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.foot-about p{max-width:36ch;margin-top:16px;color:var(--foot-muted);font-size:.95rem}
+.site-footer h2{margin-bottom:16px;font-size:.95rem;font-weight:600}
+.foot-list{display:grid;gap:10px;font-size:.95rem;color:var(--foot-muted)}
+.foot-list a{text-decoration:none;transition:color .15s}
+.foot-list a:hover{color:var(--foot-ink);text-decoration:underline;text-underline-offset:4px}
+.foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 32px;margin-top:clamp(36px,5vw,56px);padding:22px 0;border-top:1px solid var(--foot-line);color:var(--foot-muted);font-size:.85rem}
+@media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}.foot-about{grid-column:1/-1}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== ШАПКА ===== -->
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="hrhub.by — на главную">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect class="bg" width="40" height="40" rx="11"/>
+        <path class="link" d="M14 15l13-2M14 15l7 12M27 13l-6 14"/>
+        <circle class="dot" cx="14" cy="15" r="3.4"/>
+        <circle class="dot" cx="27" cy="13" r="2.8"/>
+        <circle class="dot" cx="21" cy="27" r="3.4"/>
+      </svg>
+      <span>
+        <span class="brand-name">hrhub<b>.by</b></span>
+        <span class="brand-slogan">Кадровая экосистема Беларуси</span>
+      </span>
+    </a>
+
+    <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="siteNav"><span></span></button>
+
+    <div class="nav-wrap" id="siteNav">
+      <nav aria-label="Основное меню">
+        <ul class="nav">
+          <li class="nav-item has-menu">
+            <button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="menu-seekers">Соискателям
+              <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown" id="menu-seekers">
+              <li><a href="catalog.html">Поиск вакансий</a></li>
+              <li><a href="catalog.html#resume">Разместить резюме</a></li>
+              <li><a href="index.html#test-drive">Как устроен «Тест-драйв»</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-menu">
+            <button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="menu-employers">Работодателям
+              <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="dropdown" id="menu-employers">
+              <li><a href="employer.html#post-vacancy">Разместить вакансию бесплатно</a></li>
+              <li><a href="employer.html#turnkey">Подбор «под ключ»</a></li>
+              <li><a href="employer.html#test-drive">Тест-драйв специалиста</a></li>
+              <li><a href="employer.html#paid-options">Платные опции</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="about.html">О проекте</a></li>
+        </ul>
+      </nav>
+
+      <div class="region" role="group" aria-label="Регион работы">
+        <button class="region-btn" type="button" aria-pressed="true">🇧🇾 Работа в РБ</button>
+        <button class="region-btn" type="button" aria-pressed="false" disabled title="Внешние рынки появятся позже">🌍 За пределами РБ <span class="soon">скоро</span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head" aria-labelledby="cat-title">
+  <div class="wrap">
+    <h1 id="cat-title">Каталог вакансий и резюме</h1>
+    <p>Найдите вакансию по точной должности из справочника ОКРБ 014-2017 или оставьте резюме без регистрации.</p>
+  </div>
+</section>
+
+<section class="emp" aria-label="Каталог">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Разделы каталога">
+      <button class="tab" role="tab" type="button" id="tab-search" aria-controls="panel-search" aria-selected="true">Поиск вакансий</button>
+      <button class="tab" role="tab" type="button" id="tab-resume" aria-controls="panel-resume" aria-selected="false" tabindex="-1">Разместить резюме</button>
+    </div>
+
+    <div id="panel-search" role="tabpanel" aria-labelledby="tab-search">
+      <div class="panel filters">
+        <div class="field span2">
+          <label class="label" for="fJobInput">Профессия / должность (по ОКРБ 014-2017)</label>
+          <div class="combo" id="comboFJob">
+            <div class="combo-box">
+              <input id="fJobInput" type="text" placeholder="Например, рекл менед" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="fJobList" aria-autocomplete="list">
+              <span class="combo-code" hidden></span>
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="fJobList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Выберите должность из справочника: вводить свой вариант нельзя.</p>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="fFormatLabel">Формат работы</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fFormatLabel">
+          <label class="seg-opt"><input type="radio" name="fformat" value="all" checked><span>Все форматы</span></label>
+          <label class="seg-opt"><input type="radio" name="fformat" value="remote"><span>Удалённо</span></label>
+          <label class="seg-opt"><input type="radio" name="fformat" value="hybrid"><span>Гибрид</span></label>
+          <label class="seg-opt"><input type="radio" name="fformat" value="office"><span>Офис</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">География</span>
+          <div id="fGeoRemote" hidden>
+            <span class="geo-fixed">Вся Беларусь</span>
+            <p class="note">Удалённые вакансии доступны соискателям из любого региона РБ.</p>
+          </div>
+          <div id="fGeoCity">
+            <div class="combo" id="comboFCity">
+            <div class="combo-box">
+              <input id="fCityInput" type="text" placeholder="Вся Беларусь. Или начните вводить город" autocomplete="off" spellcheck="false" role="combobox" aria-label="Город" aria-expanded="false" aria-controls="fCityList" aria-autocomplete="list">
+              
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="fCityList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Пусто — вся Беларусь. Выберите город из списка, чтобы сузить поиск.</p>
+          </div>
+          </div>
+        </div>
+        <label class="switch span2" style="margin-bottom:8px">
+          <input type="checkbox" id="fTestDrive">
+          <span class="switch-track" aria-hidden="true"></span>
+          <span><strong>Только с Тест-драйвом (1 месяц)</strong><small>Вакансии, где доступен пробный период 1 месяц до оформления в штат</small></span>
+        </label>
+      </div>
+
+      <div class="results-head">
+        <p class="results-count" id="resCount" aria-live="polite"></p>
+        <p class="results-note">Стартовые примеры вакансий для демонстрации.</p>
+      </div>
+      <div class="vac-grid" id="vacGrid"></div>
+      <div class="empty" id="vacEmpty" hidden>
+        <p>По выбранным фильтрам вакансий пока нет.</p>
+        <button class="btn btn-primary" type="button" id="toResume">Оставить заявку / резюме под эту должность</button>
+      </div>
+    </div>
+
+    <div id="panel-resume" role="tabpanel" aria-labelledby="tab-resume" hidden>
+      <form class="panel form-narrow" id="resumeForm" novalidate>
+        <h2 class="panel-title">Разместить резюме</h2>
+
+        <div class="field">
+          <label class="label" for="rJobInput">Основная должность (по ОКРБ 014-2017)</label>
+          <div class="combo" id="comboRJob">
+            <div class="combo-box">
+              <input id="rJobInput" type="text" placeholder="Например, рекл менед" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="rJobList" aria-autocomplete="list">
+              <span class="combo-code" hidden></span>
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="rJobList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Выберите должность из справочника: вводить свой вариант нельзя.</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="rExtraInput">Смежные должности (до 2)</label>
+          <div class="combo" id="comboRExtra">
+            <div class="combo-box">
+              <input id="rExtraInput" type="text" placeholder="Добавьте смежную должность из справочника" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="rExtraList" aria-autocomplete="list">
+              <span class="combo-code" hidden></span>
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="rExtraList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Можно добавить до 2 смежных должностей.</p>
+          </div>
+          <div class="chips-sel" id="extraChips"></div>
+        </div>
+
+        <div class="field">
+          <span class="label" id="rFormatLabel">Формат работы</span>
+          <div class="seg" role="radiogroup" aria-labelledby="rFormatLabel">
+          <label class="seg-opt"><input type="radio" name="rformat" value="remote"><span>Удалённо — Вся Беларусь</span></label>
+          <label class="seg-opt"><input type="radio" name="rformat" value="hybrid"><span>Гибрид</span></label>
+          <label class="seg-opt"><input type="radio" name="rformat" value="office"><span>Офис</span></label>
+          </div>
+          <p class="field-error" id="rFormatError" hidden></p>
+        </div>
+
+        <div class="field">
+          <span class="label">География</span>
+          <p class="note" id="rGeoEmpty" style="margin-top:0">Выберите формат работы, чтобы указать географию.</p>
+          <div id="rGeoRemote" hidden>
+            <span class="geo-fixed">Вся Беларусь</span>
+            <p class="note">Вас смогут найти работодатели из любого региона РБ.</p>
+          </div>
+          <div id="rGeoCity" hidden>
+            <div class="combo" id="comboRCity">
+            <div class="combo-box">
+              <input id="rCityInput" type="text" placeholder="Начните вводить город, например мин" autocomplete="off" spellcheck="false" role="combobox" aria-label="Город" aria-expanded="false" aria-controls="rCityList" aria-autocomplete="list">
+              
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="rCityList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Для гибрида и офиса укажите город из списка.</p>
+          </div>
+          </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="rTestDrive" checked>
+          <span class="switch-track" aria-hidden="true"></span>
+          <span><strong>Готов пройти оплачиваемый Тест-драйв 1 месяц перед оформлением</strong><small>Вы выполняете согласованный объём работ в течение месяца, затем при взаимном согласии оформляетесь в штат</small></span>
+        </label>
+
+        <div class="field">
+          <label class="label" for="rAbout">Кратко об опыте и навыках</label>
+          <textarea class="inp" id="rAbout" maxlength="1000" placeholder="Где работали, с какими задачами справляетесь, какие программы знаете"></textarea>
+          <p class="field-error" id="rAboutError" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="rContact">Контакт для связи</label>
+          <input class="inp" id="rContact" type="text" autocomplete="off" placeholder="Телефон +375…, Telegram @имя или email">
+          <p class="field-error" id="rContactError" hidden></p>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Отправить резюме</button>
+        <p class="submit-note">Без облачного хранения персональных данных: проверка документов для ПУ-2/ФСЗН проводится только при финальном оформлении с мгновенным удалением файлов.</p>
+        <p class="status-ok" id="rStatus" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="modal" id="applyModal" role="dialog" aria-modal="true" aria-labelledby="applyTitle" hidden>
+  <div class="modal-box">
+    <h2 id="applyTitle">Быстрый отклик</h2>
+    <p class="sub">Без регистрации и без загрузки документов: оставьте контакт для связи.</p>
+    <form id="applyForm" novalidate>
+      <div class="field">
+        <label class="label" for="applyName">Как к вам обращаться</label>
+        <input class="inp" id="applyName" type="text" autocomplete="name" maxlength="80">
+        <p class="field-error" id="applyNameErr" hidden></p>
+      </div>
+      <div class="field">
+        <label class="label" for="applyContact">Телефон, Telegram или email</label>
+        <input class="inp" id="applyContact" type="text" autocomplete="off" placeholder="+375…, @имя или email">
+        <p class="field-error" id="applyContactErr" hidden></p>
+      </div>
+      <div class="field">
+        <label class="label" for="applyMsg">Сообщение (по желанию)</label>
+        <textarea class="inp" id="applyMsg" maxlength="500" style="min-height:90px"></textarea>
+      </div>
+      <label class="check"><input type="checkbox" id="applyConsent"><span>Согласен на передачу контакта работодателю для связи по этой вакансии</span></label>
+      <p class="field-error" id="applyConsentErr" hidden></p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" type="submit">Отправить отклик</button>
+        <button class="btn btn-line" type="button" id="applyCancel">Отмена</button>
+      </div>
+    </form>
+    <div id="applyDone" hidden>
+      <p class="done-title">Отклик сохранён</p>
+      <p class="note">Прототип: данные хранятся только в этом браузере и никуда не передаются.</p>
+      <div class="modal-actions"><button class="btn btn-primary" type="button" id="applyClose">Закрыть</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ПОДВАЛ ===== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="index.html" aria-label="hrhub.by — на главную">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect class="bg" width="40" height="40" rx="11"/>
+            <path class="link" d="M14 15l13-2M14 15l7 12M27 13l-6 14"/>
+            <circle class="dot" cx="14" cy="15" r="3.4"/>
+            <circle class="dot" cx="27" cy="13" r="2.8"/>
+            <circle class="dot" cx="21" cy="27" r="3.4"/>
+          </svg>
+          <span>
+            <span class="brand-name">hrhub<b>.by</b></span>
+            <span class="brand-slogan">Кадровая экосистема Беларуси</span>
+          </span>
+        </a>
+        <p>Вакансии, резюме и подбор персонала по всей Беларуси — с акцентом на удалённый и гибридный форматы.</p>
+      </div>
+
+      <nav aria-label="Разделы сайта">
+        <h2>Разделы</h2>
+        <ul class="foot-list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="catalog.html">Каталог</a></li>
+          <li><a href="employer.html">Работодателям / HR-сопровождение</a></li>
+          <li><a href="about.html">О проекте и правила</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2>Контакты</h2>
+        <ul class="foot-list">
+          <li>Республика Беларусь</li>
+          <!-- Заменить на реальный адрес перед публикацией -->
+          <li><a href="mailto:info@hrhub.by">info@hrhub.by</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> hrhub.by. Все права защищены.</span>
+      <span>При работе с персональными данными соблюдаем законодательство Республики Беларусь.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="okrb-data.js"></script>
+<script src="cities-data.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  /* ---------- Меню: выпадающие списки и бургер ---------- */
+  const header = $('.site-header');
+  const burger = $('#burger');
+  const navWrap = $('#siteNav');
+  const items = $$('.nav-item.has-menu');
+  const desktop = window.matchMedia('(min-width:1041px)');
+  const canHover = () => desktop.matches && window.matchMedia('(hover:hover)').matches;
+
+  const setItem = (item, open) => {
+    item.classList.toggle('open', open);
+    $('.nav-link', item).setAttribute('aria-expanded', String(open));
+  };
+  const closeAll = except => items.forEach(i => { if (i !== except) setItem(i, false); });
+  const setMenu = open => {
+    navWrap.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    if (!open) closeAll();
+  };
+
+  items.forEach(item => {
+    let timer;
+    $('.nav-link', item).addEventListener('click', () => {
+      const open = canHover() ? true : !item.classList.contains('open');
+      closeAll(item);
+      setItem(item, open);
+    });
+    item.addEventListener('mouseenter', () => {
+      if (!canHover()) return;
+      clearTimeout(timer);
+      closeAll(item);
+      setItem(item, true);
+    });
+    item.addEventListener('mouseleave', () => {
+      if (!canHover()) return;
+      timer = setTimeout(() => setItem(item, false), 140);
+    });
+    item.addEventListener('focusout', e => {
+      if (canHover() && e.relatedTarget && !item.contains(e.relatedTarget)) setItem(item, false);
+    });
+  });
+
+  burger.addEventListener('click', () => setMenu(!navWrap.classList.contains('open')));
+  $$('a', navWrap).forEach(a => a.addEventListener('click', () => { closeAll(); setMenu(false); }));
+  document.addEventListener('click', e => {
+    if (!header.contains(e.target)) { closeAll(); setMenu(false); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeAll(); setMenu(false); }
+  });
+  desktop.addEventListener('change', e => { if (e.matches) setMenu(false); });
+
+  /* ---------- Каталог вакансий и резюме ---------- */
+  const initCatalog = () => {
+    const OKRB = Array.isArray(window.OKRB_DATA) ? window.OKRB_DATA : [];
+    const CITIES = Array.isArray(window.CITIES_BY) ? window.CITIES_BY : [];
+    const norm = s => String(s).toLowerCase().replace(/ё/g, 'е');
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const tokens = q => norm(q).split(/[\s,;.\/\-–—]+/).filter(Boolean);
+    const FORMATS = { remote: 'Удалённо', hybrid: 'Гибрид', office: 'Офис' };
+
+    /* Выпадающий справочник: выбрать можно только позицию из списка */
+    const makeCombo = (root, items, opts) => {
+      const input = $('input', root), list = $('.combo-list', root), codeEl = $('.combo-code', root);
+      const resetBtn = $('.combo-reset', root), note = $('.combo-note', root);
+      const baseNote = note.textContent;
+      let current = null;
+      if (!items.length) {
+        input.disabled = true;
+        note.textContent = opts.missing;
+        note.classList.add('is-error');
+        return { get: () => null, select() {}, reset() {}, setError() {} };
+      }
+      const hay = items.map(it => norm(it.text + ' ' + (it.meta || '')));
+      const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); };
+      const rowHtml = i => {
+        const it = items[i];
+        if (!it.note) return '<li><button type="button" class="combo-opt" data-i="' + i + '"><span>' + esc(it.text) + '</span>' + (it.meta ? '<small>' + esc(it.meta) + '</small>' : '') + '</button></li>';
+        return '<li class="combo-row"><button type="button" class="combo-opt combo-opt--note" data-i="' + i + '" title="' + esc('Пояснение: ' + it.note) + '">' +
+          '<span class="opt-head">' + esc(it.text) + '<span class="opt-code"> · ' + esc(it.meta) + '</span></span>' +
+          '<span class="opt-note">' + esc(it.note) + '</span></button>' +
+          '<button type="button" class="combo-more" aria-expanded="false" aria-label="Показать полное пояснение" hidden>ещё ▾</button></li>';
+      };
+      const markTruncated = () => $$('.combo-row:not(.is-open)', list).forEach(row => {
+        const n = $('.opt-note', row);
+        $('.combo-more', row).hidden = !(n.scrollWidth > n.clientWidth);
+      });
+      const toggleRow = row => {
+        const n = $('.opt-note', row), b = $('.combo-more', row);
+        const opening = !row.classList.contains('is-open');
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          n.removeEventListener('transitionend', finish);
+          if (opening) n.style.height = 'auto';
+          else { row.classList.remove('is-open'); n.style.height = ''; }
+        };
+        if (opening) row.dataset.h = n.offsetHeight;
+        const start = n.offsetHeight;
+        n.style.height = start + 'px';
+        if (opening) row.classList.add('is-open');
+        void n.offsetHeight;
+        n.style.height = (opening ? n.scrollHeight : (Number(row.dataset.h) || start)) + 'px';
+        b.textContent = opening ? 'свернуть ▴' : 'ещё ▾';
+        b.setAttribute('aria-expanded', String(opening));
+        n.addEventListener('transitionend', finish);
+        setTimeout(finish, 400);
+      };
+      const open = () => {
+        if (current) return;
+        const raw = input.value.trim(), toks = tokens(raw);
+        let html;
+        if (raw.length < 2 || !toks.length) {
+          html = '<li class="combo-msg">Введите минимум 2 буквы для поиска.</li>';
+        } else {
+          const rows = [];
+          items.forEach((it, i) => { if (toks.every(t => hay[i].includes(t))) rows.push(i); });
+          html = rows.length
+            ? rows.slice(0, 8).map(rowHtml).join('') +
+              (rows.length > 8 ? '<li class="combo-msg">Показаны первые 8 из ' + rows.length + '. Уточните запрос.</li>' : '')
+            : '<li class="combo-msg">Ничего не найдено. Попробуйте другие фрагменты слов.</li>';
+        }
+        list.innerHTML = html;
+        list.hidden = false;
+        markTruncated();
+        input.setAttribute('aria-expanded', 'true');
+      };
+      const setError = msg => {
+        note.textContent = msg || baseNote;
+        note.classList.toggle('is-error', !!msg);
+        if (msg) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+      };
+      const select = i => {
+        current = items[i];
+        input.value = current.text;
+        input.readOnly = true;
+        root.classList.add('is-locked');
+        if (codeEl) { codeEl.textContent = current.meta || ''; codeEl.hidden = !current.meta; }
+        resetBtn.hidden = false;
+        setError('');
+        if (opts.detail) note.textContent = opts.detail(current);
+        close();
+        if (opts.onChange) opts.onChange(current);
+      };
+      const reset = focus => {
+        current = null;
+        input.readOnly = false;
+        input.value = '';
+        root.classList.remove('is-locked');
+        if (codeEl) codeEl.hidden = true;
+        resetBtn.hidden = true;
+        setError('');
+        close();
+        if (opts.onChange) opts.onChange(null);
+        if (focus !== false) input.focus();
+      };
+      input.addEventListener('focus', open);
+      input.addEventListener('input', open);
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Escape') close();
+        if (e.key !== 'ArrowDown') return;
+        if (list.hidden) open();
+        const first = $('.combo-opt', list);
+        if (first) { e.preventDefault(); first.focus(); }
+      });
+      list.addEventListener('mousedown', e => e.preventDefault());
+      list.addEventListener('click', e => {
+        const m = e.target.closest('.combo-more');
+        if (m) { toggleRow(m.closest('.combo-row')); return; }
+        const b = e.target.closest('.combo-opt');
+        if (b) select(Number(b.dataset.i));
+      });
+      window.addEventListener('resize', () => { if (!list.hidden) markTruncated(); });
+      list.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { close(); input.focus(); return; }
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+        e.preventDefault();
+        const opts2 = $$('.combo-opt', list), k = opts2.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') (opts2[k + 1] || opts2[k]).focus();
+        else if (k > 0) opts2[k - 1].focus();
+        else input.focus();
+      });
+      root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) close(); });
+      resetBtn.addEventListener('click', () => reset(true));
+      return { get: () => current, select, reset, setError };
+    };
+    const MISS_JOB = 'Не удалось загрузить справочник. Проверьте, что файл okrb-data.js лежит рядом с этой страницей.';
+    const MISS_CITY = 'Не удалось загрузить список городов. Проверьте, что файл cities-data.js лежит рядом с этой страницей.';
+    const jobItems = OKRB.map(x => ({ text: x.title, meta: x.code, note: x.note || '', data: x }));
+    const cityItems = CITIES.map(c => ({ text: c }));
+    const detail = it => it.data.issue + '. Направление: ' + it.data.cluster + '.';
+    const byCode = code => OKRB.find(x => x.code === code);
+    const plural = n => {
+      const a = n % 10, b = n % 100;
+      return a === 1 && b !== 11 ? 'вакансия' : (a >= 2 && a <= 4 && (b < 12 || b > 14)) ? 'вакансии' : 'вакансий';
+    };
+    const setMsg = (id, text) => { const el = $(id); el.textContent = text; el.hidden = !text; };
+    const checked = name => ($('input[name="' + name + '"]:checked') || {}).value || '';
+    const contactError = v => {
+      const s = v.trim();
+      if (!s) return 'Укажите телефон, Telegram или email.';
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) || /^@[A-Za-z0-9_]{5,32}$/.test(s)) return '';
+      const digits = s.replace(/\D/g, '');
+      if (/^[+\d\s()\-]+$/.test(s) && digits.length >= 9 && digits.length <= 15) return '';
+      return 'Проверьте контакт: телефон (+375…), Telegram (@имя) или email.';
+    };
+    const mem = {};
+    const pushRec = (key, rec) => {
+      let arr = [];
+      try { arr = JSON.parse(window.localStorage.getItem(key)) || []; if (!Array.isArray(arr)) arr = []; } catch (e) { arr = mem[key] || []; }
+      arr.push(rec);
+      mem[key] = arr;
+      try { window.localStorage.setItem(key, JSON.stringify(arr)); return true; } catch (e) { return false; }
+    };
+
+    /* Вкладки */
+    const tabs = { search: [$('#tab-search'), $('#panel-search')], resume: [$('#tab-resume'), $('#panel-resume')] };
+    const showTab = (name, silent) => {
+      Object.keys(tabs).forEach(k => {
+        const on = k === name;
+        tabs[k][0].setAttribute('aria-selected', String(on));
+        tabs[k][0].tabIndex = on ? 0 : -1;
+        tabs[k][1].hidden = !on;
+      });
+      if (silent) return;
+      try { window.history.replaceState(null, '', name === 'resume' ? '#resume' : window.location.pathname + window.location.search); } catch (e) {}
+    };
+    const goTab = name => { showTab(name); $('.tabs').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+    Object.keys(tabs).forEach(k => {
+      tabs[k][0].addEventListener('click', () => showTab(k));
+      tabs[k][0].addEventListener('keydown', e => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const next = k === 'search' ? 'resume' : 'search';
+        showTab(next);
+        tabs[next][0].focus();
+      });
+    });
+    $$('a[href="catalog.html"], a[href="catalog.html#resume"]').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      goTab(a.getAttribute('href').endsWith('#resume') ? 'resume' : 'search');
+    }));
+    window.addEventListener('hashchange', () => showTab(window.location.hash === '#resume' ? 'resume' : 'search', true));
+
+    /* Вкладка 1: поиск вакансий */
+    const VACANCIES = [
+      { id: 'v1', headline: 'Бухгалтер, ведение УСН', code: '2411-003', format: 'remote', city: '', td: true },
+      { id: 'v2', headline: 'Бухгалтер по первичной документации и кассе', code: '3313-001', format: 'hybrid', city: 'Минск', td: true },
+      { id: 'v3', headline: 'Главный бухгалтер для небольшой компании', code: '1211-002', format: 'hybrid', city: 'Гродно', td: true },
+      { id: 'v4', headline: 'Специалист по кадровому делопроизводству', code: '2423-003', format: 'remote', city: '', td: true },
+      { id: 'v5', headline: 'Заведующий канцелярией (документооборот)', code: '1219-008', format: 'office', city: 'Брест', td: false },
+      { id: 'v6', headline: 'Юрисконсульт по договорной работе', code: '2619-023', format: 'hybrid', city: 'Минск', td: false },
+      { id: 'v7', headline: 'Менеджер по рекламе', code: '1222-006', format: 'remote', city: '', td: false },
+      { id: 'v8', headline: 'Специалист по работе с клиентами', code: '2432-002', format: 'remote', city: '', td: true },
+      { id: 'v9', headline: 'Экономист на производственное предприятие', code: '2631-015', format: 'office', city: 'Гомель', td: false }
+    ];
+    let fJob, fCity;
+    const render = () => {
+      const job = fJob.get(), city = fCity.get(), f = checked('fformat'), td = $('#fTestDrive').checked;
+      const rows = VACANCIES.filter(v => (!job || v.code === job.data.code) && (f === 'all' || v.format === f) &&
+        (!city || v.format === 'remote' || v.city === city.text) && (!td || v.td));
+      const fact = (k, v) => '<div><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>';
+      $('#resCount').textContent = rows.length ? 'Найдено: ' + rows.length + ' ' + plural(rows.length) : 'Вакансий не найдено';
+      $('#vacGrid').hidden = !rows.length;
+      $('#vacEmpty').hidden = !!rows.length;
+      $('#vacGrid').innerHTML = rows.map(v => {
+        const x = byCode(v.code);
+        return '<article class="vac"><h3>' + esc(v.headline) + '</h3><dl>' +
+          fact('Должность по ОКРБ', x ? x.title + ' · ' + x.code : v.code) + fact('Формат работы', FORMATS[v.format]) +
+          fact('География', v.format === 'remote' ? 'Вся Беларусь' : v.city) + '</dl><div class="vac-foot">' +
+          (v.td ? '<span class="tag">Тест-драйв 1 мес.</span>' : '<span></span>') +
+          '<button type="button" class="btn btn-primary btn-sm" data-apply="' + esc(v.id) + '">Откликнуться</button></div></article>';
+      }).join('');
+    };
+    fJob = makeCombo($('#comboFJob'), jobItems, { missing: MISS_JOB, detail, onChange: render });
+    fCity = makeCombo($('#comboFCity'), cityItems, { missing: MISS_CITY, onChange: render });
+    const syncF = () => {
+      const remote = checked('fformat') === 'remote';
+      $('#fGeoRemote').hidden = !remote;
+      $('#fGeoCity').hidden = remote;
+      if (remote) fCity.reset(false);
+      render();
+    };
+    $$('input[name="fformat"]').forEach(r => r.addEventListener('change', syncF));
+    $('#fTestDrive').addEventListener('change', render);
+
+    /* Окно быстрого отклика */
+    const modal = $('#applyModal');
+    let applyFor = null, lastFocus = null;
+    const openModal = v => {
+      applyFor = v;
+      $('#applyTitle').textContent = 'Отклик: ' + v.headline;
+      $('#applyForm').reset();
+      ['#applyNameErr', '#applyContactErr', '#applyConsentErr'].forEach(id => setMsg(id, ''));
+      $('#applyForm').hidden = false;
+      $('#applyDone').hidden = true;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      $('#applyName').focus();
+    };
+    const closeModal = () => {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    };
+    $('#vacGrid').addEventListener('click', e => {
+      const b = e.target.closest('[data-apply]');
+      if (!b) return;
+      lastFocus = b;
+      openModal(VACANCIES.find(v => v.id === b.dataset.apply));
+    });
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    $('#applyCancel').addEventListener('click', closeModal);
+    $('#applyClose').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => {
+      if (modal.hidden) return;
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      const f = $$('input, textarea, button', modal).filter(el => !el.disabled && el.offsetParent !== null || el === document.activeElement);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    $('#applyForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = $('#applyName').value.trim(), cErr = contactError($('#applyContact').value), consent = $('#applyConsent').checked;
+      setMsg('#applyNameErr', name.length >= 2 ? '' : 'Укажите, как к вам обращаться.');
+      setMsg('#applyContactErr', cErr);
+      setMsg('#applyConsentErr', consent ? '' : 'Нужно согласие на передачу контакта.');
+      if (name.length < 2) { $('#applyName').focus(); return; }
+      if (cErr) { $('#applyContact').focus(); return; }
+      if (!consent) { $('#applyConsent').focus(); return; }
+      pushRec('hrhub.responses', { vacancy: applyFor.id, code: applyFor.code, name, contact: $('#applyContact').value.trim(), message: $('#applyMsg').value.trim(), created: new Date().toISOString() });
+      $('#applyForm').hidden = true;
+      $('#applyDone').hidden = false;
+      $('#applyClose').focus();
+    });
+
+    /* Вкладка 2: резюме */
+    let rJob, rCity, rExtra;
+    const extras = [];
+    const renderExtras = () => {
+      $('#extraChips').innerHTML = extras.map(x => '<span class="chip-sel">' + esc(x.title) + ' · ' + esc(x.code) +
+        '<button type="button" data-rm="' + esc(x.code) + '" aria-label="Убрать должность ' + esc(x.title) + '">×</button></span>').join('');
+      const full = extras.length >= 2, root = $('#comboRExtra');
+      $('input', root).disabled = full || !OKRB.length;
+      if (OKRB.length) $('.combo-note', root).textContent = full ? 'Выбрано максимум 2 смежные должности.' : 'Можно добавить до 2 смежных должностей.';
+    };
+    $('#extraChips').addEventListener('click', e => {
+      const b = e.target.closest('[data-rm]');
+      if (!b) return;
+      const k = extras.findIndex(x => x.code === b.dataset.rm);
+      if (k !== -1) extras.splice(k, 1);
+      renderExtras();
+    });
+    rJob = makeCombo($('#comboRJob'), jobItems, {
+      missing: MISS_JOB, detail,
+      onChange: it => {
+        if (!it) return;
+        const k = extras.findIndex(x => x.code === it.data.code);
+        if (k !== -1) { extras.splice(k, 1); renderExtras(); }
+      }
+    });
+    rExtra = makeCombo($('#comboRExtra'), jobItems, {
+      missing: MISS_JOB,
+      onChange: it => {
+        if (!it) return;
+        const main = rJob.get();
+        let err = '';
+        if (main && main.data.code === it.data.code) err = 'Эта должность уже выбрана основной.';
+        else if (extras.some(x => x.code === it.data.code)) err = 'Эта должность уже добавлена.';
+        else if (extras.length >= 2) err = 'Можно добавить не больше 2 смежных должностей.';
+        else extras.push({ title: it.data.title, code: it.data.code });
+        rExtra.reset(false);
+        renderExtras();
+        if (err) rExtra.setError(err);
+      }
+    });
+    rCity = makeCombo($('#comboRCity'), cityItems, { missing: MISS_CITY });
+    renderExtras();
+    const syncR = () => {
+      const f = checked('rformat');
+      $('#rGeoEmpty').hidden = !!f;
+      $('#rGeoRemote').hidden = f !== 'remote';
+      $('#rGeoCity').hidden = !(f === 'hybrid' || f === 'office');
+      setMsg('#rFormatError', '');
+    };
+    $$('input[name="rformat"]').forEach(r => r.addEventListener('change', syncR));
+    syncR();
+
+    const resume = $('#resumeForm');
+    resume.addEventListener('input', () => { setMsg('#rAboutError', ''); setMsg('#rContactError', ''); $('#rStatus').textContent = ''; });
+    resume.addEventListener('submit', e => {
+      e.preventDefault();
+      const bad = [], job = rJob.get(), f = checked('rformat'), city = rCity.get();
+      if (!job) { rJob.setError('Выберите основную должность из справочника.'); bad.push($('#rJobInput')); }
+      setMsg('#rFormatError', f ? '' : 'Выберите формат работы.');
+      if (!f) bad.push($('input[name="rformat"]'));
+      if ((f === 'hybrid' || f === 'office') && !city) { rCity.setError('Выберите город из списка.'); bad.push($('#rCityInput')); }
+      const about = $('#rAbout').value.trim(), cErr = contactError($('#rContact').value);
+      setMsg('#rAboutError', about.length >= 20 ? '' : 'Опишите опыт подробнее: минимум 20 символов.');
+      if (about.length < 20) bad.push($('#rAbout'));
+      setMsg('#rContactError', cErr);
+      if (cErr) bad.push($('#rContact'));
+      if (bad.length) { bad[0].focus(); return; }
+      const saved = pushRec('hrhub.resumes', {
+        job: { code: job.data.code, title: job.data.title }, extras: extras.slice(), format: f,
+        city: f === 'remote' ? 'Вся Беларусь' : city.text, testDrive: $('#rTestDrive').checked,
+        about, contact: $('#rContact').value.trim(), created: new Date().toISOString()
+      });
+      resume.reset();
+      rJob.reset(false);
+      rCity.reset(false);
+      extras.length = 0;
+      renderExtras();
+      syncR();
+      $('#rStatus').textContent = 'Резюме сохранено. Прототип: данные хранятся только в этом браузере и никуда не передаются.' +
+        (saved ? '' : ' Хранилище браузера недоступно: данные сохранятся только до перезагрузки страницы.');
+    });
+
+    /* Пустой результат -> резюме с подставленной должностью */
+    $('#toResume').addEventListener('click', () => {
+      const job = fJob.get();
+      goTab('resume');
+      if (job) { rJob.reset(false); rJob.select(OKRB.indexOf(job.data)); }
+    });
+
+    render();
+    showTab(window.location.hash === '#resume' ? 'resume' : 'search', true);
+  };
+  initCatalog();
+
+  /* ---------- Подвал: текущий год ---------- */
+  const year = $('#year');
+  if (year) year.textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
