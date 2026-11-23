@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Кабинет работодателя hrhub.by: разместите вакансию по точной должности ОКРБ 014-2017 или передайте подбор HR-специалисту.">
+<meta name="description" content="Кабинет работодателя hrhub.by: вход, подтверждение организации по УНП и публикация вакансий по точной должности ОКРБ 014-2017.">
 <title>Кабинет работодателя — hrhub.by</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -184,6 +184,53 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
 .my-empty{padding:8px 2px;color:var(--muted)}
 @media (max-width:720px){.grid-3{grid-template-columns:1fr}.my-item{flex-direction:column}}
 
+/* ===== 9. Вход, УНП, контакты ===== */
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn-primary[disabled]:hover{background:var(--accent);border-color:var(--accent)}
+.btn-sm{align-self:center;min-height:44px;margin-top:0;padding:0 22px;font-size:.95rem}
+.btn-line{background:none;border-color:var(--line);color:var(--ink)}
+.btn-line:hover{border-color:var(--accent)}
+.strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;margin-bottom:24px;padding:16px 22px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.strip strong{font-size:1.05rem}
+.badge{display:inline-block;margin-left:10px;padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:600;vertical-align:middle}
+.badge.ok{background:var(--accent-soft);color:var(--accent-hover)}
+.badge.wait{background:var(--line);color:var(--muted)}
+.st-meta{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:.92rem}
+.social{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-social{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;transition:border-color .15s}
+.btn-social:hover{border-color:var(--accent)}
+.btn-social i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;color:#fff;font-size:.9rem;font-style:normal;font-weight:700}
+.ico-g{background:#4285f4}.ico-y{background:#fc3f1d}
+.or{display:flex;align-items:center;gap:14px;margin:22px 0 18px;color:var(--muted);font-size:.88rem}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.auth-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
+.group{margin:0 0 24px;padding:18px 20px;border:1px solid var(--line);border-radius:14px}
+.group legend{padding:0 8px;font-weight:600}
+.req{margin-bottom:24px;padding:16px 18px;border:1px solid var(--accent);border-radius:14px;background:var(--accent-soft)}
+.req dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0 0 10px}
+.req dt{color:var(--muted);font-size:.88rem}
+.req dd{margin:0;font-weight:500}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.check{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:.93rem;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--accent)}
+.contact-add{display:grid;grid-template-columns:180px 1fr auto;gap:12px;align-items:start}
+.site-row{display:flex;gap:12px}
+.site-row .inp{flex:1}
+.chips-sel{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip-sel{display:inline-flex;align-items:center;gap:8px;padding:6px 8px 6px 14px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);font-size:.9rem;font-weight:500}
+.chip-sel button{padding:0 4px;border:0;background:none;color:var(--muted);font:inherit;font-size:1.15rem;line-height:1;cursor:pointer}
+.vp-label{color:var(--muted);font-size:.8rem}
+.vp-title{margin:2px 0 14px;font-size:1.2rem;font-weight:700;letter-spacing:-.01em}
+.cc-box{padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+.cc-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0}
+.cc-addr{margin-top:4px;color:var(--muted);font-size:.92rem}
+.cc-links{display:grid;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.cc-links li{display:flex;flex-wrap:wrap;gap:4px 14px}
+.cc-links span{min-width:78px;color:var(--muted);font-size:.9rem}
+.cc-links a{color:var(--accent);font-weight:600;text-decoration:none;word-break:break-all}
+.cc-links a:hover{color:var(--accent-hover);text-decoration:underline}
+@media (max-width:720px){.social,.row2,.contact-add{grid-template-columns:1fr}.site-row{flex-direction:column}}
+
 /* ===== 7. Подвал ===== */
 .site-footer{padding-top:clamp(44px,6vw,72px);background:var(--foot-bg);color:var(--foot-ink)}
 .site-footer :focus-visible{outline-color:var(--foot-ink)}
@@ -237,8 +284,8 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
             </button>
             <ul class="dropdown" id="menu-seekers">
               <li><a href="catalog.html">Поиск вакансий</a></li>
-              <li><a href="catalog.html#post-resume">Разместить резюме</a></li>
-              <li><a href="employer.html#test-drive">Как устроен «Тест-драйв»</a></li>
+              <li><a href="catalog.html#resume">Разместить резюме</a></li>
+              <li><a href="index.html#test-drive">Как устроен «Тест-драйв»</a></li>
             </ul>
           </li>
           <li class="nav-item has-menu">
@@ -269,110 +316,248 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
 <section class="page-head" aria-labelledby="emp-title">
   <div class="wrap">
     <h1 id="emp-title">Кабинет работодателя</h1>
-    <p>Разместите вакансию в каталоге самостоятельно или передайте подбор HR-специалисту.</p>
+    <p>Вакансии публикуют только организации с подтверждённым УНП: войдите, подтвердите организацию и полномочия ответственного лица.</p>
   </div>
 </section>
 
-<section class="emp" aria-label="Размещение вакансии">
+<section class="emp" aria-label="Кабинет работодателя">
   <div class="wrap narrow">
 
-    <div class="panel" id="turnkey">
-      <h2 class="panel-title">Сценарий работы</h2>
-      <div class="seg" role="radiogroup" aria-label="Сценарий работы">
-        <label class="seg-opt"><input type="radio" name="scenario" value="self" checked><span>Самостоятельное размещение в каталоге</span></label>
-        <label class="seg-opt"><input type="radio" name="scenario" value="turnkey"><span>Подбор «под ключ» через HR-специалиста</span></label>
-      </div>
-      <p class="note" id="scenarioNote" aria-live="polite"></p>
+    <div class="strip" id="strip" hidden>
+      <div><strong id="stOrg"></strong><span class="badge" id="stBadge"></span></div>
+      <div class="st-meta"><span id="stEmail"></span><button class="link-btn" id="logout" type="button">Выйти</button></div>
     </div>
 
-    <form class="panel" id="post-vacancy" novalidate>
-      <h2 class="panel-title">Разместить вакансию</h2>
-
-      <div class="field">
-        <label class="label" for="jobInput">Профессия / должность (по ОКРБ 014-2017)</label>
-        <div class="combo" id="comboJob">
-          <div class="combo-box">
-            <input id="jobInput" type="text" placeholder="Например, рекл менед" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="jobList" aria-autocomplete="list">
-            <span class="combo-code" hidden></span>
-            <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+    <div id="viewAuth">
+      <div class="panel">
+        <h2 class="panel-title">Вход и регистрация организации</h2>
+        <div class="social">
+          <button class="btn-social" id="btnGoogle" type="button"><i class="ico-g" aria-hidden="true">G</i>Войти через Google</button>
+          <button class="btn-social" id="btnYandex" type="button"><i class="ico-y" aria-hidden="true">Я</i>Войти через Яндекс</button>
+        </div>
+        <p class="note">Прототип: в рабочей версии откроется окно входа выбранного сервиса. Вход через Google или Яндекс, как и по почте, не даёт права публиковать вакансии: сначала нужно подтвердить УНП.</p>
+        <div class="or"><span>или по почте-логину</span></div>
+        <div class="seg" role="radiogroup" aria-label="Режим" style="margin-bottom:20px">
+          <label class="seg-opt"><input type="radio" name="amode" value="login" checked><span>Вход</span></label>
+          <label class="seg-opt"><input type="radio" name="amode" value="register"><span>Регистрация</span></label>
+        </div>
+        <form id="authForm" novalidate>
+          <div class="field">
+            <label class="label" for="authEmail">Почта-логин</label>
+            <input class="inp" id="authEmail" type="email" autocomplete="username" placeholder="login@company.by">
+            <p class="field-error" id="authEmailErr" hidden></p>
           </div>
-          <ul class="combo-list" id="jobList" role="listbox" aria-label="Профессии" hidden></ul>
-          <p class="combo-note" aria-live="polite">Выберите должность из справочника: вводить свой вариант нельзя.</p>
+          <div class="field">
+            <label class="label" for="authPass">Пароль</label>
+            <input class="inp" id="authPass" type="password" autocomplete="current-password" placeholder="Не короче 8 символов">
+            <p class="field-error" id="authPassErr" hidden></p>
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-primary" id="authSubmit" type="submit">Войти</button>
+            <button class="link-btn" id="forgotBtn" type="button">Забыли пароль?</button>
+          </div>
+          <p class="note" id="authHint"></p>
+        </form>
+        <form id="forgotForm" class="group" style="margin:20px 0 0" hidden novalidate>
+          <p class="label" style="font-size:.95rem;color:var(--ink);font-weight:600">Восстановление доступа</p>
+          <p class="note" style="margin:6px 0 14px">Ссылка для сброса пароля отправляется только на почту-логин. Публичные контакты компании для этого не используются.</p>
+          <div class="field" style="margin-bottom:14px">
+            <label class="label" for="fEmail">Почта-логин</label>
+            <input class="inp" id="fEmail" type="email" autocomplete="username" placeholder="login@company.by">
+            <p class="field-error" id="fErr" hidden></p>
+          </div>
+          <button class="btn btn-line btn-sm" type="submit">Отправить ссылку</button>
+          <p class="status-ok" id="fDone" role="status" hidden></p>
+        </form>
+      </div>
+    </div>
+
+    <div id="viewVerify" hidden>
+      <form class="panel" id="verifyForm" novalidate>
+        <h2 class="panel-title">Подтверждение организации и полномочий</h2>
+        <p class="note" style="margin:-8px 0 22px">Правило «1 УНП = 1 кабинет»: УНП привязывается к вашей почте-логину, второй кабинет на этот УНП создать нельзя.</p>
+        <div class="field">
+          <label class="label" for="vUnp">УНП организации (9 цифр)</label>
+          <input class="inp" id="vUnp" type="text" inputmode="numeric" maxlength="9" autocomplete="off" placeholder="123456789">
+          <p class="field-error" id="vUnpErr" hidden></p>
         </div>
+        <div class="req" id="reqBox" hidden>
+          <dl>
+            <div><dt>Наименование</dt><dd id="reqOrg"></dd></div>
+            <div><dt>Адрес</dt><dd id="reqAddr"></dd></div>
+            <div><dt>Регион</dt><dd id="reqRegion"></dd></div>
+          </dl>
+          <p class="note" style="margin:0">Реквизиты подставлены по тестовому шаблону. Подключение реестра РБ запланировано: в рабочей версии данные придут из реестра.</p>
+        </div>
+        <fieldset class="group">
+          <legend>Ответственное лицо и документ</legend>
+          <div class="row2">
+            <div class="field">
+              <label class="label" for="vFio">ФИО</label>
+              <input class="inp" id="vFio" type="text" autocomplete="off" placeholder="Иванов Иван Иванович">
+              <p class="field-error" id="vFioErr" hidden></p>
+            </div>
+            <div class="field">
+              <label class="label" for="vPos">Должность</label>
+              <input class="inp" id="vPos" type="text" autocomplete="off" placeholder="Директор">
+              <p class="field-error" id="vPosErr" hidden></p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="vDoc">Документ, подтверждающий полномочия</label>
+            <select class="inp" id="vDoc">
+              <option value="">Выберите документ</option>
+              <option>Приказ о назначении или полномочиях</option>
+              <option>Доверенность</option>
+              <option>Устав / выписка из ЕГР</option>
+            </select>
+            <p class="field-error" id="vDocErr" hidden></p>
+          </div>
+          <label class="check"><input type="checkbox" id="vConfirm"><span>Подтверждаю, что документ есть и будет предъявлен при проверке</span></label>
+          <p class="field-error" id="vConfirmErr" hidden></p>
+          <p class="note" style="margin-top:10px">Проверка без облачного хранения сканов: файлы на сайт не загружаются.</p>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Подтвердить УНП и полномочия</button>
+      </form>
+
+      <div class="panel" id="lockedPanel">
+        <h2 class="panel-title">Разместить вакансию</h2>
+        <p class="plate" role="alert" id="lockedMsg">Для публикации вакансий подтвердите УНП организации и полномочия ответственного лица</p>
+        <button class="btn btn-primary" type="button" disabled>Опубликовать вакансию</button>
+      </div>
+    </div>
+
+    <div id="viewCabinet" hidden>
+
+      <div class="panel" id="turnkey">
+        <h2 class="panel-title">Сценарий работы</h2>
+        <div class="seg" role="radiogroup" aria-label="Сценарий работы">
+          <label class="seg-opt"><input type="radio" name="scenario" value="self" checked><span>Самостоятельное размещение в каталоге</span></label>
+          <label class="seg-opt"><input type="radio" name="scenario" value="turnkey"><span>Подбор «под ключ» через HR-специалиста</span></label>
+        </div>
+        <p class="note" id="scenarioNote" aria-live="polite"></p>
       </div>
 
-      <div class="field">
-        <span class="label" id="formatLabel">Формат работы</span>
-        <div class="seg" role="radiogroup" aria-labelledby="formatLabel">
-          <label class="seg-opt"><input type="radio" name="format" value="remote"><span>Удалённо</span></label>
-          <label class="seg-opt"><input type="radio" name="format" value="hybrid"><span>Гибрид</span></label>
-          <label class="seg-opt"><input type="radio" name="format" value="office"><span>Офис</span></label>
-        </div>
-        <p class="field-error" id="formatError" hidden></p>
-      </div>
+      <form class="panel" id="post-vacancy" novalidate>
+        <h2 class="panel-title">Разместить вакансию</h2>
 
-      <div class="field">
-        <span class="label">География</span>
-        <p class="note" id="geoEmpty" style="margin-top:0">Выберите формат работы, чтобы указать географию.</p>
-        <div id="geoRemote" hidden>
-          <span class="geo-fixed">Вся Беларусь</span>
-          <p class="note">Вакансию увидят соискатели по всей РБ независимо от города вашего офиса.</p>
-        </div>
-        <div id="geoCity" hidden>
-          <div class="combo" id="comboCity">
+        <div class="field">
+          <label class="label" for="jobInput">Профессия / должность (по ОКРБ 014-2017)</label>
+          <div class="combo" id="comboJob">
             <div class="combo-box">
-              <input id="cityInput" type="text" placeholder="Начните вводить город, например мин" autocomplete="off" spellcheck="false" role="combobox" aria-label="Город" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list">
+              <input id="jobInput" type="text" placeholder="Например, рекл менед" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="jobList" aria-autocomplete="list">
+              <span class="combo-code" hidden></span>
               <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
             </div>
-            <ul class="combo-list" id="cityList" role="listbox" aria-label="Города" hidden></ul>
-            <p class="combo-note" aria-live="polite">Для гибрида и офиса укажите город из списка.</p>
+            <ul class="combo-list" id="jobList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Выберите должность из справочника: вводить свой вариант нельзя.</p>
           </div>
         </div>
-      </div>
 
-      <div class="grid-3">
         <div class="field">
-          <label class="label" for="salaryFrom">Зарплата от, BYN</label>
-          <input class="inp" id="salaryFrom" type="number" min="0" step="1" inputmode="numeric" placeholder="1500">
+          <span class="label" id="formatLabel">Формат работы</span>
+          <div class="seg" role="radiogroup" aria-labelledby="formatLabel">
+            <label class="seg-opt"><input type="radio" name="format" value="remote"><span>Удалённо</span></label>
+            <label class="seg-opt"><input type="radio" name="format" value="hybrid"><span>Гибрид</span></label>
+            <label class="seg-opt"><input type="radio" name="format" value="office"><span>Офис</span></label>
+          </div>
+          <p class="field-error" id="formatError" hidden></p>
         </div>
+
         <div class="field">
-          <label class="label" for="salaryTo">до, BYN</label>
-          <input class="inp" id="salaryTo" type="number" min="0" step="1" inputmode="numeric" placeholder="2200">
+          <span class="label">География</span>
+          <p class="note" id="geoEmpty" style="margin-top:0">Выберите формат работы, чтобы указать географию.</p>
+          <div id="geoRemote" hidden>
+            <span class="geo-fixed">Вся Беларусь</span>
+            <p class="note">Вакансию увидят соискатели по всей РБ независимо от города вашего офиса.</p>
+          </div>
+          <div id="geoCity" hidden>
+            <div class="combo" id="comboCity">
+            <div class="combo-box">
+              <input id="cityInput" type="text" placeholder="Начните вводить город, например мин" autocomplete="off" spellcheck="false" role="combobox" aria-label="Город" aria-expanded="false" aria-controls="cityList" aria-autocomplete="list">
+              
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="cityList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Для гибрида и офиса укажите город из списка.</p>
+          </div>
+          </div>
         </div>
+
+        <div class="grid-3">
+          <div class="field">
+            <label class="label" for="salaryFrom">Зарплата от, BYN</label>
+            <input class="inp" id="salaryFrom" type="number" min="0" step="1" inputmode="numeric" placeholder="1500">
+          </div>
+          <div class="field">
+            <label class="label" for="salaryTo">до, BYN</label>
+            <input class="inp" id="salaryTo" type="number" min="0" step="1" inputmode="numeric" placeholder="2200">
+          </div>
+          <div class="field">
+            <label class="label" for="employment">Занятость</label>
+            <select class="inp" id="employment">
+              <option>Полная занятость</option>
+              <option>Неполная занятость</option>
+              <option>Проектная работа по договору</option>
+            </select>
+          </div>
+        </div>
+        <p class="field-error" id="salaryError" hidden style="margin:-12px 2px 24px"></p>
+
         <div class="field">
-          <label class="label" for="employment">Занятость</label>
-          <select class="inp" id="employment">
-            <option>Полная занятость</option>
-            <option>Неполная занятость</option>
-            <option>Проектная работа по договору</option>
+          <label class="label" for="desc">Краткое описание задач</label>
+          <textarea class="inp" id="desc" maxlength="1000" placeholder="Какие задачи предстоит решать специалисту"></textarea>
+          <p class="field-error" id="descError" hidden></p>
+        </div>
+
+        <label class="switch" id="test-drive">
+          <input type="checkbox" id="testDrive">
+          <span class="switch-track" aria-hidden="true"></span>
+          <span><strong>Доступен «Тест-драйв специалиста»</strong><small>Пробный период 1 месяц до оформления в штат</small></span>
+        </label>
+
+        <p class="plate">Паспортные данные и личный номер кандидата (для ПУ-2) не запрашиваются на этапе отклика — они запрашиваются только после взаимного согласия при оформлении.</p>
+
+        <button class="btn btn-primary" id="publishBtn" type="submit">Опубликовать вакансию</button>
+        <p class="status-ok" id="formStatus" role="status"></p>
+      </form>
+
+      <section class="panel" id="company" aria-labelledby="company-title">
+        <h2 class="panel-title" id="company-title">Карточка компании и публичные контакты</h2>
+        <p class="note" style="margin:-8px 0 20px">Эти контакты видят соискатели в вакансии. Они не заменяют почту-логин и не используются для восстановления пароля. Добавить можно любое количество почт, телефонов и мессенджеров.</p>
+        <div class="contact-add">
+          <select class="inp" id="cType" aria-label="Тип контакта">
+            <option value="email">Рабочая почта</option>
+            <option value="phone">Телефон</option>
+            <option value="telegram">Telegram</option>
+            <option value="viber">Viber</option>
           </select>
+          <input class="inp" id="cValue" type="text" autocomplete="off" placeholder="work@company.by" aria-label="Значение контакта">
+          <button class="btn btn-primary btn-sm" id="cAdd" type="button">Добавить</button>
         </div>
-      </div>
-      <p class="field-error" id="salaryError" hidden style="margin:-12px 2px 24px"></p>
+        <p class="field-error" id="cErr" hidden></p>
+        <div class="chips-sel" id="cList"></div>
+        <div class="field" style="margin:22px 0 0">
+          <label class="label" for="cSite">Сайт компании</label>
+          <div class="site-row">
+            <input class="inp" id="cSite" type="text" autocomplete="off" placeholder="https://company.by">
+            <button class="btn btn-line btn-sm" id="cSiteSave" type="button">Сохранить</button>
+          </div>
+          <p class="field-error" id="siteErr" hidden></p>
+        </div>
+      </section>
 
-      <div class="field">
-        <label class="label" for="desc">Краткое описание задач</label>
-        <textarea class="inp" id="desc" maxlength="1000" placeholder="Какие задачи предстоит решать специалисту"></textarea>
-        <p class="field-error" id="descError" hidden></p>
-      </div>
+      <section class="panel" aria-labelledby="pv-title">
+        <h2 class="panel-title" id="pv-title">Так соискатель увидит компанию в вакансии</h2>
+        <div id="preview"></div>
+      </section>
 
-      <label class="switch" id="test-drive">
-        <input type="checkbox" id="testDrive">
-        <span class="switch-track" aria-hidden="true"></span>
-        <span><strong>Доступен «Тест-драйв специалиста»</strong><small>Пробный период 1 месяц до оформления в штат</small></span>
-      </label>
-
-      <p class="plate">Паспортные данные и личный номер кандидата (для ПУ-2) не запрашиваются на этапе отклика — они запрашиваются только после взаимного согласия при оформлении.</p>
-
-      <button class="btn btn-primary" id="publishBtn" type="submit">Опубликовать вакансию</button>
-      <p class="status-ok" id="formStatus" role="status"></p>
-    </form>
-
-    <section class="panel" aria-labelledby="my-title">
-      <h2 class="panel-title" id="my-title">Мои вакансии <span id="myCount"></span></h2>
-      <ul class="my-list" id="myList"></ul>
-      <p class="note">Вакансии хранятся только в этом браузере.</p>
-    </section>
+      <section class="panel" aria-labelledby="my-title">
+        <h2 class="panel-title" id="my-title">Мои вакансии <span id="myCount"></span></h2>
+        <ul class="my-list" id="myList"></ul>
+        <p class="note">Вакансии хранятся только в этом браузере.</p>
+      </section>
+    </div>
 
   </div>
 </section>
@@ -487,10 +672,23 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
   });
   desktop.addEventListener('change', e => { if (e.matches) setMenu(false); });
 
+  /* ---------- Список городов: поддерживаем разные имена массива ---------- */
+  const pickCities = () => {
+    const sources = [
+      typeof CITIES_BY !== 'undefined' ? CITIES_BY : null,
+      typeof CITIES_DATA !== 'undefined' ? CITIES_DATA : null,
+      typeof citiesData !== 'undefined' ? citiesData : null,
+      typeof cities !== 'undefined' ? cities : null,
+      typeof CITIES !== 'undefined' ? CITIES : null
+    ];
+    const arr = sources.find(a => Array.isArray(a) && a.length) || [];
+    return arr.map(c => typeof c === 'string' ? c : (c && (c.name || c.title || c.city || c.label)) || '').filter(Boolean);
+  };
+
   /* ---------- Кабинет работодателя ---------- */
   const initEmployer = () => {
     const OKRB = Array.isArray(window.OKRB_DATA) ? window.OKRB_DATA : [];
-    const CITIES = Array.isArray(window.CITIES_BY) ? window.CITIES_BY : [];
+    const CITIES = pickCities();
     const norm = s => String(s).toLowerCase().replace(/ё/g, 'е');
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const tokens = q => norm(q).split(/[\s,;.\/\-–—]+/).filter(Boolean);
@@ -505,7 +703,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       if (!items.length) {
         input.disabled = true;
         note.textContent = opts.missing;
-        note.classList.add('is-error');
+        if (!opts.neutral) note.classList.add('is-error');
         return { get: () => null, select() {}, reset() {}, setError() {} };
       }
       const hay = items.map(it => norm(it.text + ' ' + (it.meta || '')));
@@ -578,6 +776,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         setError('');
         if (opts.detail) note.textContent = opts.detail(current);
         close();
+        if (opts.onChange) opts.onChange(current);
       };
       const reset = focus => {
         current = null;
@@ -588,6 +787,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         resetBtn.hidden = true;
         setError('');
         close();
+        if (opts.onChange) opts.onChange(null);
         if (focus !== false) input.focus();
       };
       input.addEventListener('focus', open);
@@ -620,40 +820,231 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       resetBtn.addEventListener('click', () => reset(true));
       return { get: () => current, select, reset, setError };
     };
+    const LOCK_MSG = 'Для публикации вакансий подтвердите УНП организации и полномочия ответственного лица';
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const KEYS = { acc: 'hrhub.accounts', ses: 'hrhub.session', vac: 'hrhub.vacancies' };
+    const mem = {};
+    const read = (k, def) => {
+      try { const v = JSON.parse(window.localStorage.getItem(k)); return v === null ? def : v; } catch (e) { return mem[k] !== undefined ? mem[k] : def; }
+    };
+    const write = (k, v) => { mem[k] = v; try { window.localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
+    const accounts = () => { const a = read(KEYS.acc, []); return Array.isArray(a) ? a : []; };
+    const me = () => { const e = read(KEYS.ses, ''); return accounts().find(a => a.email === e) || null; };
+    const saveMe = acct => write(KEYS.acc, accounts().map(a => a.email === acct.email ? acct : a));
+    const setMsg = (id, text) => { const el = $(id); el.textContent = text; el.hidden = !text; };
+    const contacts = a => (a.contacts = Object.assign({ emails: [], phones: [], telegram: [], viber: [], site: '' }, a.contacts || {}));
+    /* Прототип: пароль хранится только в виде хеша; в рабочей версии хеширует и проверяет сервер */
+    const hashPw = async (email, pw) => {
+      const text = 'hrhub:' + email + ':' + pw;
+      try {
+        if (window.crypto && window.crypto.subtle) {
+          const buf = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+          return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+      } catch (e) {}
+      let h = 5381;
+      for (let i = 0; i < text.length; i++) h = ((h << 5) + h + text.charCodeAt(i)) | 0;
+      return 'p' + (h >>> 0).toString(16);
+    };
 
+    /* Справочники для формы вакансии */
     const jobCombo = makeCombo($('#comboJob'), OKRB.map(x => ({ text: x.title, meta: x.code, note: x.note || '', data: x })), {
       missing: 'Не удалось загрузить справочник. Проверьте, что файл okrb-data.js лежит рядом с этой страницей.',
-      detail: it => it.data.issue + '. Направление: ' + it.data.cluster + '.'
+      detail: it => it.data.issue + '. Направление: ' + it.data.cluster + '.',
+      onChange: () => { const a = me(); if (a && a.verified) renderPreview(); }
     });
     const cityCombo = makeCombo($('#comboCity'), CITIES.map(c => ({ text: c })), {
-      missing: 'Не удалось загрузить список городов. Проверьте, что файл cities-data.js лежит рядом с этой страницей.'
+      missing: 'Список городов не загрузился. Проверьте, что файл cities-data.js лежит рядом с этой страницей.', neutral: true
     });
 
-    /* Подстановка должности из ссылки: ?title=...&code=... (или position вместо title) */
-    const params = new URLSearchParams(window.location.search);
-    const pTitle = params.get('title') || params.get('position') || '', pCode = params.get('code') || '';
-    if (pTitle || pCode) {
-      let idx = OKRB.findIndex(x => (!pCode || x.code === pCode) && (!pTitle || norm(x.title) === norm(pTitle)));
-      if (idx === -1 && pCode) idx = OKRB.findIndex(x => x.code === pCode);
-      if (idx !== -1) jobCombo.select(idx);
-      else jobCombo.setError('Должность из ссылки не найдена в справочнике. Выберите её из списка.');
-    }
+    /* ---- Вход и регистрация ---- */
+    const mode = () => ($('input[name="amode"]:checked') || {}).value || 'login';
+    const syncMode = () => {
+      const reg = mode() === 'register';
+      $('#authSubmit').textContent = reg ? 'Создать кабинет' : 'Войти';
+      $('#authPass').setAttribute('autocomplete', reg ? 'new-password' : 'current-password');
+      $('#forgotBtn').hidden = reg;
+      $('#forgotForm').hidden = true;
+      $('#authHint').textContent = reg
+        ? 'Почта-логин уникальна: на одну почту приходится один кабинет. На неё же приходит ссылка для восстановления пароля.'
+        : 'Вход не даёт права публиковать вакансии: нужно подтвердить УНП организации.';
+      setMsg('#authEmailErr', ''); setMsg('#authPassErr', '');
+    };
+    $$('input[name="amode"]').forEach(r => r.addEventListener('change', syncMode));
+    syncMode();
 
-    /* Сценарий работы */
+    const social = provider => {
+      const email = 'demo.' + provider + '@hrhub.test', list = accounts();
+      if (!list.some(a => a.email === email)) { list.push({ email, provider, hash: '', verified: false, created: Date.now() }); write(KEYS.acc, list); }
+      write(KEYS.ses, email);
+      render();
+    };
+    $('#btnGoogle').addEventListener('click', () => social('google'));
+    $('#btnYandex').addEventListener('click', () => social('yandex'));
+
+    $('#authForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = $('#authEmail').value.trim().toLowerCase(), pw = $('#authPass').value, reg = mode() === 'register';
+      setMsg('#authEmailErr', ''); setMsg('#authPassErr', '');
+      if (!EMAIL_RE.test(email)) { setMsg('#authEmailErr', 'Введите корректную почту-логин.'); $('#authEmail').focus(); return; }
+      if (pw.length < 8) { setMsg('#authPassErr', 'Пароль должен быть не короче 8 символов.'); $('#authPass').focus(); return; }
+      const list = accounts(), found = list.find(a => a.email === email), hash = await hashPw(email, pw);
+      if (reg) {
+        if (found) { setMsg('#authEmailErr', 'Кабинет с такой почтой-логином уже существует. Войдите или восстановите пароль через эту почту.'); $('#authEmail').focus(); return; }
+        list.push({ email, hash, provider: 'email', verified: false, created: Date.now() });
+        write(KEYS.acc, list);
+      } else if (!found || !found.hash || found.hash !== hash) {
+        setMsg('#authPassErr', 'Неверная почта или пароль.'); return;
+      }
+      write(KEYS.ses, email);
+      $('#authForm').reset();
+      render();
+    });
+
+    $('#forgotBtn').addEventListener('click', () => { $('#forgotForm').hidden = !$('#forgotForm').hidden; $('#fEmail').value = $('#authEmail').value.trim(); setMsg('#fDone', ''); });
+    $('#forgotForm').addEventListener('submit', e => {
+      e.preventDefault();
+      if (!EMAIL_RE.test($('#fEmail').value.trim())) { setMsg('#fErr', 'Введите почту-логин.'); return; }
+      setMsg('#fErr', '');
+      setMsg('#fDone', 'Если кабинет с такой почтой-логином существует, ссылка для сброса пароля будет отправлена на неё (в прототипе письма не отправляются). Публичные контакты компании для восстановления не используются.');
+    });
+    $('#logout').addEventListener('click', () => { write(KEYS.ses, ''); render(); });
+
+    /* ---- Верификация по УНП ---- */
+    const TEMPLATES = [
+      { org: 'ООО «Тест-Компания»', addr: 'г. Минск, ул. Тестовая, 1, оф. 12', region: 'г. Минск' },
+      { org: 'ЗАО «Нордтрейд-Тест»', addr: 'г. Брест, пр. Республики, 5', region: 'Брестская область' },
+      { org: 'ООО «Гомельснаб-Тест»', addr: 'г. Гомель, ул. Советская, 10', region: 'Гомельская область' },
+      { org: 'ЧУП «Гродно-Сервис-Тест»', addr: 'г. Гродно, ул. Ожешко, 3', region: 'Гродненская область' },
+      { org: 'ООО «Витебск-Консалт-Тест»', addr: 'г. Витебск, ул. Ленина, 7', region: 'Витебская область' }
+    ];
+    const unpOwner = unp => accounts().find(a => a.verified && a.unp === unp);
+    const checkUnp = () => {
+      const a = me(), v = $('#vUnp').value;
+      const owner = v.length === 9 ? unpOwner(v) : null;
+      const taken = owner && (!a || owner.email !== a.email);
+      setMsg('#vUnpErr', taken ? 'Этот УНП уже привязан к другому кабинету. Правило «1 УНП = 1 кабинет»: второй кабинет создать нельзя.' : '');
+      const t = v.length === 9 && !taken ? TEMPLATES[Number(v) % TEMPLATES.length] : null;
+      $('#reqBox').hidden = !t;
+      if (t) { $('#reqOrg').textContent = t.org; $('#reqAddr').textContent = t.addr; $('#reqRegion').textContent = t.region; }
+      return { taken, t };
+    };
+    $('#vUnp').addEventListener('input', () => { $('#vUnp').value = $('#vUnp').value.replace(/\D/g, '').slice(0, 9); checkUnp(); });
+    $('#verifyForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const a = me();
+      if (!a) return;
+      const unp = $('#vUnp').value, fio = $('#vFio').value.trim().replace(/\s+/g, ' '), pos = $('#vPos').value.trim(), doc = $('#vDoc').value;
+      const bad = [], { taken, t } = checkUnp();
+      if (unp.length !== 9) { setMsg('#vUnpErr', 'УНП состоит из 9 цифр.'); bad.push($('#vUnp')); }
+      else if (taken) bad.push($('#vUnp'));
+      const fioOk = fio.split(' ').length >= 2 && fio.length >= 5;
+      setMsg('#vFioErr', fioOk ? '' : 'Укажите фамилию и имя ответственного лица.'); if (!fioOk) bad.push($('#vFio'));
+      setMsg('#vPosErr', pos.length >= 2 ? '' : 'Укажите должность.'); if (pos.length < 2) bad.push($('#vPos'));
+      setMsg('#vDocErr', doc ? '' : 'Выберите документ.'); if (!doc) bad.push($('#vDoc'));
+      setMsg('#vConfirmErr', $('#vConfirm').checked ? '' : 'Подтвердите наличие документа.'); if (!$('#vConfirm').checked) bad.push($('#vConfirm'));
+      if (bad.length || !t) { if (bad.length) bad[0].focus(); return; }
+      Object.assign(a, { verified: true, unp, org: t.org, addr: t.addr, region: t.region, responsible: { fio, position: pos, doc } });
+      contacts(a);
+      saveMe(a);
+      $('#verifyForm').reset();
+      $('#reqBox').hidden = true;
+      render();
+    });
+
+    /* ---- Публичные контакты и карточка компании ---- */
+    const KEY_OF = { email: 'emails', phone: 'phones', telegram: 'telegram', viber: 'viber' };
+    const LABEL = { emails: 'Почта', phones: 'Телефон', telegram: 'Telegram', viber: 'Viber' };
+    const PLACE = { email: 'work@company.by', phone: '+375 29 123-45-67', telegram: '@company_hr', viber: '+375 29 123-45-67' };
+    const normPhone = v => {
+      const s = v.trim();
+      if (!/^[+\d\s()\-]+$/.test(s)) return '';
+      const d = s.replace(/\D/g, '');
+      return d.length >= 9 && d.length <= 15 ? '+' + d : '';
+    };
+    const normTg = v => {
+      const s = v.trim().replace(/^https?:\/\/(t\.me|telegram\.me)\//i, '').replace(/^@/, '');
+      return /^[A-Za-z0-9_]{5,32}$/.test(s) ? '@' + s : '';
+    };
+    $('#cType').addEventListener('change', () => { $('#cValue').setAttribute('placeholder', PLACE[$('#cType').value]); setMsg('#cErr', ''); });
+    $('#cAdd').addEventListener('click', () => {
+      const a = me();
+      if (!a || !a.verified) return;
+      const type = $('#cType').value, raw = $('#cValue').value, c = contacts(a);
+      let val = '', err = '';
+      if (type === 'email') {
+        val = raw.trim().toLowerCase();
+        if (!EMAIL_RE.test(val)) err = 'Введите корректную рабочую почту.';
+        else if (val === a.email) err = 'Публичная почта должна отличаться от почты-логина.';
+      } else if (type === 'telegram') {
+        val = normTg(raw);
+        if (!val) err = 'Укажите Telegram: @имя (5–32 символа) или ссылку t.me/имя.';
+      } else {
+        val = normPhone(raw);
+        if (!val) err = 'Укажите номер в формате +375 29 123-45-67.';
+      }
+      if (!err && c[KEY_OF[type]].includes(val)) err = 'Такой контакт уже добавлен.';
+      setMsg('#cErr', err);
+      if (err) return;
+      c[KEY_OF[type]].push(val);
+      saveMe(a);
+      $('#cValue').value = '';
+      renderContacts(); renderPreview();
+    });
+    $('#cList').addEventListener('click', e => {
+      const b = e.target.closest('[data-k]'), a = me();
+      if (!b || !a) return;
+      const list = contacts(a)[b.dataset.k], k = list.indexOf(b.dataset.v);
+      if (k !== -1) list.splice(k, 1);
+      saveMe(a); renderContacts(); renderPreview();
+    });
+    $('#cSiteSave').addEventListener('click', () => {
+      const a = me();
+      if (!a || !a.verified) return;
+      let u = $('#cSite').value.trim(), href = '';
+      if (u) {
+        if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+        try { const x = new URL(u); if (/^https?:$/.test(x.protocol) && x.hostname.indexOf('.') > 0) href = x.href; } catch (err) {}
+        if (!href) { setMsg('#siteErr', 'Введите адрес сайта, например company.by.'); return; }
+      }
+      setMsg('#siteErr', '');
+      contacts(a).site = href;
+      saveMe(a);
+      $('#cSite').value = href;
+      renderPreview();
+    });
+    const renderContacts = () => {
+      const a = me(), c = contacts(a);
+      $('#cList').innerHTML = Object.keys(LABEL).map(k => c[k].map(v => '<span class="chip-sel">' + LABEL[k] + ': ' + esc(v) +
+        '<button type="button" data-k="' + k + '" data-v="' + esc(v) + '" aria-label="Удалить ' + esc(v) + '">×</button></span>').join('')).join('');
+      $('#cSite').value = c.site || '';
+    };
+    const renderPreview = () => {
+      const a = me(), c = contacts(a), links = [], job = jobCombo.get();
+      c.emails.forEach(v => links.push(['Почта', v, 'mailto:' + v]));
+      c.phones.forEach(v => links.push(['Телефон', v, 'tel:' + v]));
+      c.telegram.forEach(v => links.push(['Telegram', v, 'https://t.me/' + v.slice(1)]));
+      c.viber.forEach(v => links.push(['Viber', v, 'viber://chat?number=' + encodeURIComponent(v)]));
+      if (c.site) links.push(['Сайт', c.site.replace(/^https?:\/\//, ''), c.site]);
+      $('#preview').innerHTML = '<p class="vp-label">Вакансия</p><p class="vp-title">' + esc(job ? job.text : 'Название вашей вакансии') + '</p>' +
+        '<div class="cc-box"><div class="cc-head"><strong>' + esc(a.org) + '</strong><span class="badge ok">УНП верифицирован</span></div>' +
+        '<p class="cc-addr">' + esc(a.addr) + '</p>' +
+        (links.length
+          ? '<ul class="cc-links">' + links.map(l => '<li><span>' + l[0] + '</span><a href="' + esc(l[2]) + '"' +
+              (/^https?:/.test(l[2]) ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + esc(l[1]) + '</a></li>').join('') + '</ul>'
+          : '<p class="note">Публичные контакты не добавлены: соискатели смогут откликнуться только через hrhub.by.</p>') + '</div>';
+    };
+
+    /* ---- Сценарий и форма вакансии (доступна только после верификации) ---- */
     const SCENARIOS = {
       self: { note: 'Вакансия размещается в каталоге бесплатно и видна соискателям по всей РБ.', btn: 'Опубликовать вакансию', tag: 'В каталоге', ok: 'Вакансия добавлена в «Мои вакансии».' },
       turnkey: { note: 'Заполните карточку вакансии: поиск, отсев и собеседования возьмёт на себя HR-специалист. Условия подбора согласуются отдельно.', btn: 'Сохранить заявку на подбор', tag: 'Подбор «под ключ»', ok: 'Заявка на подбор добавлена в «Мои вакансии».' }
     };
     const getScenario = () => ($('input[name="scenario"]:checked') || {}).value || 'self';
-    const syncScenario = () => {
-      const sc = SCENARIOS[getScenario()];
-      $('#scenarioNote').textContent = sc.note;
-      $('#publishBtn').textContent = sc.btn;
-    };
+    const syncScenario = () => { const sc = SCENARIOS[getScenario()]; $('#scenarioNote').textContent = sc.note; $('#publishBtn').textContent = sc.btn; };
     $$('input[name="scenario"]').forEach(r => r.addEventListener('change', syncScenario));
     syncScenario();
 
-    /* Формат работы и география */
     const fmtRadios = $$('input[name="format"]');
     const getFormat = () => (fmtRadios.find(r => r.checked) || {}).value || '';
     const syncGeo = () => {
@@ -666,19 +1057,10 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     fmtRadios.forEach(r => r.addEventListener('change', syncGeo));
     syncGeo();
 
-    /* Мои вакансии (localStorage) */
-    const KEY = 'hrhub.vacancies';
-    let memory = [];
-    const load = () => {
-      try { const a = JSON.parse(window.localStorage.getItem(KEY)); return Array.isArray(a) ? a : []; } catch (e) { return memory; }
-    };
-    const save = arr => {
-      memory = arr;
-      try { window.localStorage.setItem(KEY, JSON.stringify(arr)); return true; } catch (e) { return false; }
-    };
     const money = v => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0');
+    const myVacancies = () => { const a = me(), all = read(KEYS.vac, []); return Array.isArray(all) && a ? all.filter(v => v.owner === a.email) : []; };
     const renderList = () => {
-      const arr = load();
+      const arr = myVacancies();
       $('#myCount').textContent = arr.length ? '(' + arr.length + ')' : '';
       $('#myList').innerHTML = arr.length ? arr.map(v => {
         const pay = v.salaryTo ? money(v.salaryFrom) + '–' + money(v.salaryTo) + ' BYN' : 'от ' + money(v.salaryFrom) + ' BYN';
@@ -690,25 +1072,24 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       }).join('') : '<li class="my-empty">Пока нет вакансий. Опубликованные вакансии появятся здесь.</li>';
     };
     $('#myList').addEventListener('click', e => {
-      const b = e.target.closest('[data-del]');
-      if (!b) return;
-      save(load().filter(v => v.id !== b.dataset.del));
+      const b = e.target.closest('[data-del]'), a = me();
+      if (!b || !a) return;
+      const all = read(KEYS.vac, []);
+      write(KEYS.vac, (Array.isArray(all) ? all : []).filter(v => !(v.owner === a.email && v.id === b.dataset.del)));
       renderList();
     });
-    renderList();
 
-    /* Отправка формы */
     const form = $('#post-vacancy');
-    const setMsg = (id, text) => { const el = $(id); el.textContent = text; el.hidden = !text; };
     form.addEventListener('input', () => { setMsg('#salaryError', ''); setMsg('#descError', ''); $('#formStatus').textContent = ''; });
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const bad = [];
-      const job = jobCombo.get(), f = getFormat(), city = cityCombo.get();
+      const a = me();
+      if (!a || !a.verified) { $('#formStatus').textContent = LOCK_MSG; return; }
+      const bad = [], job = jobCombo.get(), f = getFormat(), city = cityCombo.get();
       if (!job) { jobCombo.setError('Выберите должность из справочника.'); bad.push($('#jobInput')); }
       setMsg('#formatError', f ? '' : 'Выберите формат работы.');
       if (!f) bad.push(fmtRadios[0]);
-      if ((f === 'hybrid' || f === 'office') && !city) { cityCombo.setError('Выберите город из списка.'); bad.push($('#cityInput')); }
+      if ((f === 'hybrid' || f === 'office') && !city && CITIES.length) { cityCombo.setError('Выберите город из списка.'); bad.push($('#cityInput')); }
       const from = $('#salaryFrom').value.trim(), to = $('#salaryTo').value.trim();
       let payErr = '';
       if (from === '' || Number(from) < 0) payErr = 'Укажите зарплату «от» в BYN.';
@@ -719,11 +1100,10 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       setMsg('#descError', desc.length >= 20 ? '' : 'Опишите задачи подробнее: минимум 20 символов.');
       if (desc.length < 20) bad.push($('#desc'));
       if (bad.length) { bad[0].focus(); return; }
-
-      const scenario = getScenario();
-      const saved = save(load().concat({
-        id: Date.now().toString(36), scenario, title: job.data.title, code: job.data.code, format: f,
-        geo: f === 'remote' ? 'Вся Беларусь' : city.text, salaryFrom: Number(from), salaryTo: to === '' ? null : Number(to),
+      const scenario = getScenario(), all = read(KEYS.vac, []);
+      const saved = write(KEYS.vac, (Array.isArray(all) ? all : []).concat({
+        id: Date.now().toString(36), owner: a.email, scenario, title: job.data.title, code: job.data.code, format: f,
+        geo: f === 'remote' ? 'Вся Беларусь' : (city ? city.text : 'Не указан'), salaryFrom: Number(from), salaryTo: to === '' ? null : Number(to),
         employment: $('#employment').value, desc, testDrive: $('#testDrive').checked, created: new Date().toISOString()
       }));
       form.reset();
@@ -731,10 +1111,46 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       cityCombo.reset(false);
       syncGeo();
       renderList();
+      renderPreview();
       $('#formStatus').textContent = SCENARIOS[scenario].ok + (saved ? '' : ' Хранилище браузера недоступно: список сохранится только до перезагрузки страницы.');
     });
+
+    /* ---- Какой экран показывать ---- */
+    const render = () => {
+      const a = me();
+      $('#viewAuth').hidden = !!a;
+      $('#viewVerify').hidden = !(a && !a.verified);
+      $('#viewCabinet').hidden = !(a && a.verified);
+      $('#strip').hidden = !a;
+      if (!a) return;
+      $('#stOrg').textContent = a.verified ? a.org : 'Организация не подтверждена';
+      $('#stBadge').textContent = a.verified ? 'УНП верифицирован' : 'УНП не подтверждён';
+      $('#stBadge').className = 'badge ' + (a.verified ? 'ok' : 'wait');
+      $('#stEmail').textContent = a.email + (a.provider && a.provider !== 'email' ? ' (' + (a.provider === 'google' ? 'Google' : 'Яндекс') + ')' : '');
+      if (a.verified) { renderContacts(); renderPreview(); renderList(); }
+    };
+
+    /* Подстановка должности из ссылки ?code=...&title=... (после входа и верификации) */
+    const params = new URLSearchParams(window.location.search);
+    const pTitle = params.get('title') || params.get('position') || '', pCode = params.get('code') || '';
+    if (pTitle || pCode) {
+      let idx = OKRB.findIndex(x => (!pCode || x.code === pCode) && (!pTitle || norm(x.title) === norm(pTitle)));
+      if (idx === -1 && pCode) idx = OKRB.findIndex(x => x.code === pCode);
+      if (idx !== -1) jobCombo.select(idx);
+      else jobCombo.setError('Должность из ссылки не найдена в справочнике. Выберите её из списка.');
+    }
+    render();
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target && !target.closest('[hidden]')) target.scrollIntoView({ block: 'start' });
   };
-  initEmployer();
+
+  let booted = false;
+  const boot = () => { if (!booted) { booted = true; initEmployer(); } };
+  const ready = fn => document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn();
+  ready(() => {
+    if (pickCities().length || document.readyState === 'complete') boot();
+    else { window.addEventListener('load', boot); setTimeout(boot, 4000); }
+  });
 
   /* ---------- Подвал: текущий год ---------- */
   const year = $('#year');
