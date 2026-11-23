@@ -602,10 +602,23 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
   });
   desktop.addEventListener('change', e => { if (e.matches) setMenu(false); });
 
+  /* ---------- Список городов: поддерживаем разные имена массива ---------- */
+  const pickCities = () => {
+    const sources = [
+      typeof CITIES_BY !== 'undefined' ? CITIES_BY : null,
+      typeof CITIES_DATA !== 'undefined' ? CITIES_DATA : null,
+      typeof citiesData !== 'undefined' ? citiesData : null,
+      typeof cities !== 'undefined' ? cities : null,
+      typeof CITIES !== 'undefined' ? CITIES : null
+    ];
+    const arr = sources.find(a => Array.isArray(a) && a.length) || [];
+    return arr.map(c => typeof c === 'string' ? c : (c && (c.name || c.title || c.city || c.label)) || '').filter(Boolean);
+  };
+
   /* ---------- Каталог вакансий и резюме ---------- */
   const initCatalog = () => {
     const OKRB = Array.isArray(window.OKRB_DATA) ? window.OKRB_DATA : [];
-    const CITIES = Array.isArray(window.CITIES_BY) ? window.CITIES_BY : [];
+    const CITIES = pickCities();
     const norm = s => String(s).toLowerCase().replace(/ё/g, 'е');
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const tokens = q => norm(q).split(/[\s,;.\/\-–—]+/).filter(Boolean);
@@ -620,7 +633,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       if (!items.length) {
         input.disabled = true;
         note.textContent = opts.missing;
-        note.classList.add('is-error');
+        if (!opts.neutral) note.classList.add('is-error');
         return { get: () => null, select() {}, reset() {}, setError() {} };
       }
       const hay = items.map(it => norm(it.text + ' ' + (it.meta || '')));
@@ -738,7 +751,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       return { get: () => current, select, reset, setError };
     };
     const MISS_JOB = 'Не удалось загрузить справочник. Проверьте, что файл okrb-data.js лежит рядом с этой страницей.';
-    const MISS_CITY = 'Не удалось загрузить список городов. Проверьте, что файл cities-data.js лежит рядом с этой страницей.';
+    const MISS_CITY = 'Список городов не загрузился, поэтому поиск идёт по всей Беларуси. Проверьте, что файл cities-data.js лежит рядом с этой страницей.';
     const jobItems = OKRB.map(x => ({ text: x.title, meta: x.code, note: x.note || '', data: x }));
     const cityItems = CITIES.map(c => ({ text: c }));
     const detail = it => it.data.issue + '. Направление: ' + it.data.cluster + '.';
@@ -825,7 +838,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       }).join('');
     };
     fJob = makeCombo($('#comboFJob'), jobItems, { missing: MISS_JOB, detail, onChange: render });
-    fCity = makeCombo($('#comboFCity'), cityItems, { missing: MISS_CITY, onChange: render });
+    fCity = makeCombo($('#comboFCity'), cityItems, { missing: MISS_CITY, neutral: true, onChange: render });
     const syncF = () => {
       const remote = checked('fformat') === 'remote';
       $('#fGeoRemote').hidden = !remote;
@@ -929,7 +942,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         if (err) rExtra.setError(err);
       }
     });
-    rCity = makeCombo($('#comboRCity'), cityItems, { missing: MISS_CITY });
+    rCity = makeCombo($('#comboRCity'), cityItems, { missing: MISS_CITY, neutral: true });
     renderExtras();
     const syncR = () => {
       const f = checked('rformat');
@@ -949,7 +962,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       if (!job) { rJob.setError('Выберите основную должность из справочника.'); bad.push($('#rJobInput')); }
       setMsg('#rFormatError', f ? '' : 'Выберите формат работы.');
       if (!f) bad.push($('input[name="rformat"]'));
-      if ((f === 'hybrid' || f === 'office') && !city) { rCity.setError('Выберите город из списка.'); bad.push($('#rCityInput')); }
+      if ((f === 'hybrid' || f === 'office') && !city && CITIES.length) { rCity.setError('Выберите город из списка.'); bad.push($('#rCityInput')); }
       const about = $('#rAbout').value.trim(), cErr = contactError($('#rContact').value);
       setMsg('#rAboutError', about.length >= 20 ? '' : 'Опишите опыт подробнее: минимум 20 символов.');
       if (about.length < 20) bad.push($('#rAbout'));
@@ -958,7 +971,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       if (bad.length) { bad[0].focus(); return; }
       const saved = pushRec('hrhub.resumes', {
         job: { code: job.data.code, title: job.data.title }, extras: extras.slice(), format: f,
-        city: f === 'remote' ? 'Вся Беларусь' : city.text, testDrive: $('#rTestDrive').checked,
+        city: f === 'remote' ? 'Вся Беларусь' : (city ? city.text : 'Не указан'), testDrive: $('#rTestDrive').checked,
         about, contact: $('#rContact').value.trim(), created: new Date().toISOString()
       });
       resume.reset();
@@ -981,7 +994,13 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     render();
     showTab(window.location.hash === '#resume' ? 'resume' : 'search', true);
   };
-  initCatalog();
+  let booted = false;
+  const boot = () => { if (!booted) { booted = true; initCatalog(); } };
+  const ready = fn => document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn) : fn();
+  ready(() => {
+    if (pickCities().length || document.readyState === 'complete') boot();
+    else { window.addEventListener('load', boot); setTimeout(boot, 4000); }
+  });
 
   /* ---------- Подвал: текущий год ---------- */
   const year = $('#year');
