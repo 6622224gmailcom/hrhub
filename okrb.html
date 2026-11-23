@@ -146,7 +146,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .rec:hover{background:color-mix(in srgb,var(--accent-soft) 55%,transparent)}
 .rec.is-target{background:var(--accent-soft)}
 .c-title{font-weight:600}
-.c-title mark{padding:0 2px;border-radius:4px;background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit}
+.ref-table mark{padding:0 2px;border-radius:4px;background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit}
 .code{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .note-box{position:relative}
 .note-text{display:block;padding-right:76px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--muted);font-size:.92rem}
@@ -412,6 +412,7 @@ ul,ol{margin:0;padding:0;list-style:none}
       $('.table-wrap').hidden = true;
       return;
     }
+    const MIN_FRAG = 2;
     const HINT = 'Ищите по названию, коду, выпуску или пояснению: фрагменты слов в любом порядке, например «рекл менед».';
     const ALPHABET = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ'.split('');
     const norm = s => String(s).toLowerCase().replace(/ё/g, 'е');
@@ -446,9 +447,12 @@ ul,ol{margin:0;padding:0;list-style:none}
     });
 
     const render = () => {
-      const raw = input.value.trim(), toks = tokens(raw), active = raw.length >= 2 && toks.length > 0;
+      const raw = input.value.trim(), all = tokens(raw);
+      const toks = all.filter(t => t.length >= MIN_FRAG), skipped = all.filter(t => t.length < MIN_FRAG);
+      const active = toks.length > 0;
       resetBtn.hidden = !raw;
-      hintEl.textContent = raw.length === 1 ? 'Введите минимум 2 символа, чтобы начать поиск.' : HINT;
+      hintEl.textContent = !raw ? HINT : !active ? 'Введите минимум 2 символа, чтобы начать поиск.'
+        : skipped.length ? 'Фрагменты короче 2 символов не учитываются: ' + skipped.join(', ') + '.' : HINT;
       const list = active ? items.filter(it => toks.every(t => it.hay.includes(t))) : items;
       countEl.textContent = (active ? 'Найдено позиций: ' + list.length + ' из ' + items.length : 'Всего позиций: ' + items.length);
       emptyEl.hidden = !!list.length;
@@ -463,10 +467,10 @@ ul,ol{margin:0;padding:0;list-style:none}
         const link = 'employer.html?' + new URLSearchParams({ code: x.code, position: x.title }).toString() + '#post-vacancy';
         html += '<tr class="rec" id="code-' + esc(x.code) + '">' +
           '<th scope="row" class="c-title" data-label="Профессия / должность">' + (active ? highlight(x.title, toks) : esc(x.title)) + '</th>' +
-          '<td data-label="Код ОКРБ 014-2017"><span class="code">' + esc(x.code) + '</span></td>' +
-          '<td data-label="Выпуск ЕКСД / ЕТКС">' + esc(x.issue) + '</td>' +
+          '<td data-label="Код ОКРБ 014-2017"><span class="code">' + (active ? highlight(x.code, toks) : esc(x.code)) + '</span></td>' +
+          '<td data-label="Выпуск ЕКСД / ЕТКС">' + (active ? highlight(x.issue, toks) : esc(x.issue)) + '</td>' +
           '<td data-label="Пояснение">' + (note
-            ? '<div class="note-box"><span class="note-text" title="' + esc(note) + '">' + esc(note) + '</span>' +
+            ? '<div class="note-box"><span class="note-text" title="' + esc(note) + '">' + (active ? highlight(note, toks) : esc(note)) + '</span>' +
               '<button type="button" class="more" aria-expanded="false" aria-label="Показать полное пояснение" hidden>ещё ▾</button></div>'
             : '—') + '</td>' +
           '<td data-label="Быстрые ссылки"><div class="qlinks"><a href="catalog.html">Найти вакансии</a><a href="' + esc(link) + '">Разместить вакансию</a></div></td></tr>';
