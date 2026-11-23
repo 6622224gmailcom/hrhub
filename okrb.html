@@ -119,7 +119,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .page-head{padding:clamp(40px,6vw,72px) 0 clamp(20px,3vw,32px)}
 .page-head h1{max-width:22ch;font-size:clamp(2rem,4.6vw,3.2rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;text-wrap:balance}
 .page-head p{max-width:70ch;margin-top:16px;font-size:1.1rem;color:var(--muted);text-wrap:pretty}
-.ref{padding:0 0 clamp(56px,8vw,104px)}
+.ref{padding:0 0 clamp(32px,5vw,56px)}
 .search-card{padding:16px 20px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);transition:border-color .15s}
 .search-card:focus-within{border-color:var(--accent)}
 .label{display:block;font-size:.78rem;font-weight:500;color:var(--muted)}
@@ -129,12 +129,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .link-btn{padding:6px 4px;border:0;background:none;color:var(--accent);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;white-space:nowrap}
 .link-btn:hover{color:var(--accent-hover);text-decoration:underline}
 .hint{margin:8px 0 0;color:var(--muted);font-size:.9rem}
-.alpha{display:flex;flex-wrap:wrap;gap:6px;margin:20px 0 8px;padding:8px 0}
-.alpha a,.alpha span{display:grid;place-items:center;min-width:38px;height:38px;border-radius:10px;font-weight:600;text-decoration:none}
-.alpha a{border:1px solid var(--line);background:var(--surface);transition:border-color .15s,color .15s}
-.alpha a:hover{border-color:var(--accent);color:var(--accent-hover)}
-.alpha span{border:1px dashed var(--line);color:var(--muted);opacity:.45}
-.count{margin:10px 4px 14px;color:var(--muted);font-size:.92rem}
+.count{margin:18px 4px 14px;color:var(--muted);font-size:.92rem}
 .table-wrap{border:1px solid var(--line);border-radius:20px;background:var(--surface);overflow:hidden}
 .ref-table{width:100%;border-collapse:collapse;table-layout:fixed}
 .ref-table th,.ref-table td{padding:14px 16px;text-align:left;vertical-align:top}
@@ -156,8 +151,15 @@ ul,ol{margin:0;padding:0;list-style:none}
 .qlinks{display:flex;flex-direction:column;gap:6px}
 .qlinks a{color:var(--accent);font-size:.92rem;font-weight:600;text-decoration:none}
 .qlinks a:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px}
+.feedback{padding:0 0 clamp(56px,8vw,96px)}
+.feedback-card{padding:clamp(24px,3.4vw,40px);border:1px solid var(--line);border-radius:24px;background:var(--accent-soft)}
+.feedback-card h2{font-size:clamp(1.4rem,2.6vw,1.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.feedback-card p,.feedback-card ul{max-width:72ch;margin-top:14px}
+.feedback-card ul{padding-left:22px;list-style:disc}
+.feedback-card li{margin-top:8px;padding-left:4px}
+.feedback-card li::marker{color:var(--accent)}
+.feedback-soon{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
 .empty{margin-top:16px;padding:28px;border:1px dashed var(--line);border-radius:18px;color:var(--muted);text-align:center}
-@media (min-width:861px){.alpha{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--header-h));z-index:40;margin-top:12px;background:var(--bg)}}
 @media (max-width:860px){
   .ref-table,.ref-table tbody,.ref-table tr,.ref-table td,.ref-table th{display:block}
   .ref-table colgroup,.ref-table thead{display:none}
@@ -268,7 +270,6 @@ ul,ol{margin:0;padding:0;list-style:none}
       <p class="hint" id="qHint"></p>
     </div>
 
-    <nav class="alpha" id="alpha" aria-label="Алфавитный указатель"></nav>
     <p class="count" id="count" aria-live="polite"></p>
 
     <div class="table-wrap">
@@ -289,6 +290,23 @@ ul,ol{margin:0;padding:0;list-style:none}
     </div>
     <p class="empty" id="empty" hidden>Ничего не найдено. Попробуйте другие фрагменты слов или введите только код.</p>
     <noscript><p class="empty">Для работы справочника нужен включённый JavaScript.</p></noscript>
+  </div>
+</section>
+
+<section class="feedback" aria-labelledby="fb-title">
+  <div class="wrap">
+    <div class="feedback-card">
+      <h2 id="fb-title">Помогите сделать hrhub.by удобнее</h2>
+      <p>Мы развиваем прототип сервиса пошагово и сверяем каждую деталь с реальной практикой работы в Беларуси. Если вы уже посмотрели каталог профессий, форму размещения вакансии или раздел для соискателей — расскажите, что стоит улучшить.</p>
+      <p>Будем особенно признательны, если подскажете:</p>
+      <ul>
+        <li>Какой должности или профессии по ОКРБ 014-2017 не хватило при поиске или в списке;</li>
+        <li>Где «Пояснение» сформулировано непонятно или не хватает разницы между похожими позициями;</li>
+        <li>Что на странице сбивает с толку, работает не так, как вы ожидали, или экономит время, если добавить.</li>
+      </ul>
+      <p>Никаких документов и личных данных присылать не нужно — только сама идея или замечание.</p>
+      <p class="feedback-soon">Скоро здесь появятся прямые кнопки связи в Telegram, Viber и по электронной почте для ваших предложений.</p>
+    </div>
   </div>
 </section>
 
@@ -404,7 +422,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   /* ---------- Справочник профессий ---------- */
   const initRef = () => {
     const DATA = Array.isArray(window.OKRB_DATA) ? window.OKRB_DATA : [];
-    const input = $('#q'), rowsEl = $('#rows'), alphaEl = $('#alpha'), countEl = $('#count');
+    const input = $('#q'), rowsEl = $('#rows'), countEl = $('#count');
     const emptyEl = $('#empty'), resetBtn = $('#qReset'), hintEl = $('#qHint');
     if (!DATA.length) {
       countEl.textContent = 'Не удалось загрузить справочник. Проверьте, что файл okrb-data.js лежит рядом с этой страницей.';
@@ -414,12 +432,11 @@ ul,ol{margin:0;padding:0;list-style:none}
     }
     const MIN_FRAG = 2;
     const HINT = 'Ищите по названию, коду, выпуску или пояснению: фрагменты слов в любом порядке, например «рекл менед».';
-    const ALPHABET = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ'.split('');
     const norm = s => String(s).toLowerCase().replace(/ё/g, 'е');
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const tokens = q => norm(q).split(/[\s,;.\/\-–—]+/).filter(Boolean);
     const letterOf = t => { const c = t.trim().charAt(0).toUpperCase(); return c === 'Ё' ? 'Е' : c; };
-    const items = DATA.map(x => ({ x, letter: letterOf(x.title), hay: norm([x.title, x.code, x.issue, x.note || ''].join(' ')) }))
+    const items = DATA.map(x => ({ x, letter: letterOf(x.title), prim: norm([x.title, x.code, x.issue].join(' ')), note: norm(x.note || '') }))
       .sort((a, b) => a.x.title.localeCompare(b.x.title, 'ru') || a.x.code.localeCompare(b.x.code));
 
     const highlight = (title, toks) => {
@@ -453,31 +470,30 @@ ul,ol{margin:0;padding:0;list-style:none}
       resetBtn.hidden = !raw;
       hintEl.textContent = !raw ? HINT : !active ? 'Введите минимум 2 символа, чтобы начать поиск.'
         : skipped.length ? 'Фрагменты короче 2 символов не учитываются: ' + skipped.join(', ') + '.' : HINT;
-      const list = active ? items.filter(it => toks.every(t => it.hay.includes(t))) : items;
+      const hit = it => ({ prim: toks.every(t => it.prim.includes(t)), note: toks.every(t => it.note.includes(t)) });
+      const list = active ? items.filter(it => { const h = hit(it); return h.prim || h.note; }) : items;
       countEl.textContent = (active ? 'Найдено позиций: ' + list.length + ' из ' + items.length : 'Всего позиций: ' + items.length);
       emptyEl.hidden = !!list.length;
       $('.table-wrap').hidden = !list.length;
       let html = '', cur = '';
       list.forEach(it => {
-        const x = it.x, note = x.note || '';
+        const x = it.x, note = x.note || '', h = active ? hit(it) : {}, openNote = !!(h.note && !h.prim);
         if (it.letter !== cur) {
           cur = it.letter;
           html += '<tr class="letter-row"><th colspan="5" scope="colgroup" id="letter-' + esc(cur) + '">' + esc(cur) + '</th></tr>';
         }
         const link = 'employer.html?' + new URLSearchParams({ code: x.code, position: x.title }).toString() + '#post-vacancy';
         html += '<tr class="rec" id="code-' + esc(x.code) + '">' +
-          '<th scope="row" class="c-title" data-label="Профессия / должность">' + (active ? highlight(x.title, toks) : esc(x.title)) + '</th>' +
-          '<td data-label="Код ОКРБ 014-2017"><span class="code">' + (active ? highlight(x.code, toks) : esc(x.code)) + '</span></td>' +
-          '<td data-label="Выпуск ЕКСД / ЕТКС">' + (active ? highlight(x.issue, toks) : esc(x.issue)) + '</td>' +
+          '<th scope="row" class="c-title" data-label="Профессия / должность">' + (h.prim ? highlight(x.title, toks) : esc(x.title)) + '</th>' +
+          '<td data-label="Код ОКРБ 014-2017"><span class="code">' + (h.prim ? highlight(x.code, toks) : esc(x.code)) + '</span></td>' +
+          '<td data-label="Выпуск ЕКСД / ЕТКС">' + (h.prim ? highlight(x.issue, toks) : esc(x.issue)) + '</td>' +
           '<td data-label="Пояснение">' + (note
-            ? '<div class="note-box"><span class="note-text" title="' + esc(note) + '">' + (active ? highlight(note, toks) : esc(note)) + '</span>' +
-              '<button type="button" class="more" aria-expanded="false" aria-label="Показать полное пояснение" hidden>ещё ▾</button></div>'
+            ? '<div class="note-box' + (openNote ? ' is-open' : '') + '"><span class="note-text" title="' + esc(note) + '">' + (h.note ? highlight(note, toks) : esc(note)) + '</span>' +
+              '<button type="button" class="more" aria-expanded="' + openNote + '" aria-label="Показать полное пояснение"' + (openNote ? '' : ' hidden') + '>' + (openNote ? 'свернуть ▴' : 'ещё ▾') + '</button></div>'
             : '—') + '</td>' +
           '<td data-label="Быстрые ссылки"><div class="qlinks"><a href="catalog.html">Найти вакансии</a><a href="' + esc(link) + '">Разместить вакансию</a></div></td></tr>';
       });
       rowsEl.innerHTML = html;
-      const present = new Set(list.map(it => it.letter));
-      alphaEl.innerHTML = ALPHABET.map(l => present.has(l) ? '<a href="#letter-' + l + '">' + l + '</a>' : '<span aria-hidden="true">' + l + '</span>').join('');
       markTruncated();
     };
 
