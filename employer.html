@@ -328,14 +328,18 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       <div class="st-meta"><span id="stEmail"></span><button class="link-btn" id="logout" type="button">Выйти</button></div>
     </div>
 
+    <p class="note" id="authLoading" hidden>Проверяем вход…</p>
+
     <div id="viewAuth">
       <div class="panel">
         <h2 class="panel-title">Вход и регистрация организации</h2>
+        <p class="plate" id="authBanner" hidden></p>
         <div class="social">
           <button class="btn-social" id="btnGoogle" type="button"><i class="ico-g" aria-hidden="true">G</i>Войти через Google</button>
           <button class="btn-social" id="btnYandex" type="button"><i class="ico-y" aria-hidden="true">Я</i>Войти через Яндекс</button>
         </div>
-        <p class="note">Прототип: в рабочей версии откроется окно входа выбранного сервиса. Вход через Google или Яндекс, как и по почте, не даёт права публиковать вакансии: сначала нужно подтвердить УНП.</p>
+        <p class="note" id="socialNote"></p>
+        <p class="field-error" id="socialErr" hidden></p>
         <div class="or"><span>или по почте-логину</span></div>
         <div class="seg" role="radiogroup" aria-label="Режим" style="margin-bottom:20px">
           <label class="seg-opt"><input type="radio" name="amode" value="login" checked><span>Вход</span></label>
@@ -369,6 +373,21 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
           <button class="btn btn-line btn-sm" type="submit">Отправить ссылку</button>
           <p class="status-ok" id="fDone" role="status" hidden></p>
         </form>
+      </div>
+    </div>
+
+    <div id="viewEmail" hidden>
+      <div class="panel">
+        <h2 class="panel-title">Подтвердите почту</h2>
+        <p class="plate" id="mailDemoBanner" hidden>Демо-режим: письма не отправляются. Кнопка ниже имитирует переход по ссылке из письма.</p>
+        <p>Мы отправили ссылку для подтверждения на <strong id="mailTo"></strong>. Откройте письмо (проверьте и папку «Спам»), перейдите по ссылке и вернитесь на эту страницу: без подтверждения почты кабинет не откроется.</p>
+        <div class="auth-actions" style="margin-top:20px">
+          <button class="btn btn-primary" id="mailCheck" type="button">Я подтвердил(а) почту</button>
+          <button class="btn btn-line" id="mailResend" type="button">Отправить ссылку ещё раз</button>
+          <button class="btn btn-line" id="mailDemo" type="button" hidden>Имитировать переход по ссылке (демо)</button>
+        </div>
+        <p class="status-ok" id="mailStatus" role="status"></p>
+        <p class="field-error" id="mailErr" hidden></p>
       </div>
     </div>
 
@@ -612,6 +631,14 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
   </div>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script>
+  /* Настройки реальной авторизации (Firebase Authentication).
+     Заполните данными веб-приложения из Firebase: Project settings, Your apps, Web.
+     Пока apiKey пуст, страница работает в демо-режиме: письма не отправляются, вход через Google недоступен. */
+  window.HRHUB_AUTH = { firebase: { apiKey: '', authDomain: '', projectId: '', appId: '' } };
+</script>
 <script src="okrb-data.js"></script>
 <script src="cities-data.js"></script>
 <script>
@@ -829,7 +856,14 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     };
     const write = (k, v) => { mem[k] = v; try { window.localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
     const accounts = () => { const a = read(KEYS.acc, []); return Array.isArray(a) ? a : []; };
-    const me = () => { const e = read(KEYS.ses, ''); return accounts().find(a => a.email === e) || null; };
+    let authApi = null;
+    const me = () => {
+      const u = authApi && authApi.current();
+      if (!u || !u.verified) return null;
+      let p = accounts().find(a => a.email === u.email);
+      if (!p) { p = { email: u.email, provider: u.provider, verified: false, created: Date.now() }; write(KEYS.acc, accounts().concat(p)); }
+      return p;
+    };
     const saveMe = acct => write(KEYS.acc, accounts().map(a => a.email === acct.email ? acct : a));
     const setMsg = (id, text) => { const el = $(id); el.textContent = text; el.hidden = !text; };
     const contacts = a => (a.contacts = Object.assign({ emails: [], phones: [], telegram: [], viber: [], site: '' }, a.contacts || {}));
@@ -857,7 +891,101 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       missing: 'Список городов не загрузился. Проверьте, что файл cities-data.js лежит рядом с этой страницей.', neutral: true
     });
 
-    /* ---- Вход и регистрация ---- */
+    /* ---- Авторизация: Firebase (реальная) или демо-режим ---- */
+    const makeFirebaseAuth = cfg => {
+      window.firebase.initializeApp(cfg);
+      const fa = window.firebase.auth(), subs = [];
+      fa.languageCode = 'ru';
+      const view = u => u ? { email: (u.email || '').toLowerCase(), verified: !!u.emailVerified,
+        provider: (u.providerData || []).some(p => p.providerId === 'google.com') ? 'google' : 'email' } : null;
+      const back = () => ({ url: window.location.href.split('#')[0] });
+      fa.onAuthStateChanged(u => subs.forEach(f => f(view(u))));
+      return {
+        mode: 'firebase',
+        current: () => view(fa.currentUser),
+        onChange: f => subs.push(f),
+        signUp: async (email, pw) => { const c = await fa.createUserWithEmailAndPassword(email, pw); await c.user.sendEmailVerification(back()); },
+        signIn: async (email, pw) => { await fa.signInWithEmailAndPassword(email, pw); },
+        google: async () => { const pr = new window.firebase.auth.GoogleAuthProvider(); pr.setCustomParameters({ prompt: 'select_account' }); await fa.signInWithPopup(pr); },
+        resend: async () => { if (fa.currentUser) await fa.currentUser.sendEmailVerification(back()); },
+        refresh: async () => { if (fa.currentUser) { await fa.currentUser.reload(); subs.forEach(f => f(view(fa.currentUser))); } },
+        reset: async email => { await fa.sendPasswordResetEmail(email, back()); },
+        signOut: async () => { await fa.signOut(); }
+      };
+    };
+    const makeDemoAuth = () => {
+      const subs = [];
+      const view = () => {
+        const e = read(KEYS.ses, ''), a = accounts().find(x => x.email === e);
+        return a ? { email: a.email, verified: a.emailVerified !== false, provider: a.provider || 'email' } : null;
+      };
+      const emit = () => subs.forEach(f => f(view()));
+      return {
+        mode: 'demo', current: view, onChange: f => subs.push(f),
+        signUp: async (email, pw) => {
+          const list = accounts();
+          if (list.some(a => a.email === email)) throw { code: 'auth/email-already-in-use' };
+          list.push({ email, hash: await hashPw(email, pw), provider: 'email', emailVerified: false, verified: false, created: Date.now() });
+          write(KEYS.acc, list); write(KEYS.ses, email); emit();
+        },
+        signIn: async (email, pw) => {
+          const a = accounts().find(x => x.email === email);
+          if (!a || !a.hash || a.hash !== await hashPw(email, pw)) throw { code: 'auth/invalid-credential' };
+          write(KEYS.ses, email); emit();
+        },
+        google: async () => { throw { code: 'auth/not-configured' }; },
+        resend: async () => {}, refresh: async () => emit(), reset: async () => {},
+        simulateLink: async () => {
+          const list = accounts(), a = list.find(x => x.email === read(KEYS.ses, ''));
+          if (a) { a.emailVerified = true; write(KEYS.acc, list); }
+          emit();
+        },
+        signOut: async () => { write(KEYS.ses, ''); emit(); }
+      };
+    };
+    const makeUnavailableAuth = () => {
+      const fail = async () => { throw { code: 'auth/network-request-failed' }; };
+      return { mode: 'unavailable', current: () => null, onChange() {}, signUp: fail, signIn: fail, google: fail, resend: fail, refresh: fail, reset: fail, signOut: async () => {} };
+    };
+    const fbCfg = (window.HRHUB_AUTH && window.HRHUB_AUTH.firebase) || {};
+    authApi = fbCfg.apiKey ? (window.firebase && window.firebase.auth ? makeFirebaseAuth(fbCfg) : makeUnavailableAuth()) : makeDemoAuth();
+    let authReady = authApi.mode !== 'firebase';
+    const MODE_TEXT = {
+      firebase: '',
+      demo: 'Режим прототипа: сервис авторизации не подключён. Письма со ссылками не отправляются, а вход через Google недоступен. Чтобы включить реальную проверку, заполните настройки Firebase в начале скрипта страницы.',
+      unavailable: 'Сервис авторизации не загрузился. Проверьте подключение к интернету и обновите страницу.'
+    };
+    $('#authBanner').textContent = MODE_TEXT[authApi.mode];
+    $('#authBanner').hidden = !MODE_TEXT[authApi.mode];
+    $('#mailDemoBanner').hidden = authApi.mode !== 'demo';
+    $('#mailDemo').hidden = authApi.mode !== 'demo';
+    $('#btnGoogle').disabled = authApi.mode !== 'firebase';
+    $('#btnYandex').disabled = true;
+    $('#btnYandex').title = 'Вход через Яндекс пока недоступен';
+    $('#socialNote').textContent = authApi.mode === 'firebase'
+      ? 'Откроется окно Google: пароль вводится на стороне Google и сюда не передаётся. Вход не даёт права публиковать вакансии: сначала нужно подтвердить УНП. Вход через Яндекс пока недоступен: для безопасной проверки нужна серверная часть.'
+      : 'Вход через Google и Яндекс заработает после подключения сервиса авторизации. Вход через Яндекс дополнительно требует серверной проверки.';
+
+    const ERR = {
+      'auth/email-already-in-use': ['#authEmailErr', 'Кабинет с такой почтой-логином уже существует. Войдите или восстановите пароль через эту почту.'],
+      'auth/invalid-email': ['#authEmailErr', 'Введите корректную почту-логин.'],
+      'auth/weak-password': ['#authPassErr', 'Пароль слишком простой: нужно не меньше 8 символов.'],
+      'auth/invalid-credential': ['#authPassErr', 'Неверная почта или пароль.'],
+      'auth/wrong-password': ['#authPassErr', 'Неверная почта или пароль.'],
+      'auth/user-not-found': ['#authPassErr', 'Неверная почта или пароль.'],
+      'auth/invalid-login-credentials': ['#authPassErr', 'Неверная почта или пароль.'],
+      'auth/too-many-requests': ['#authPassErr', 'Слишком много попыток. Повторите чуть позже.'],
+      'auth/network-request-failed': ['#authPassErr', 'Нет связи с сервисом авторизации. Проверьте интернет и повторите.'],
+      'auth/unauthorized-domain': ['#authPassErr', 'Этот адрес сайта не добавлен в разрешённые домены Firebase Authentication.'],
+      'auth/popup-blocked': ['#socialErr', 'Браузер заблокировал окно входа. Разрешите всплывающие окна для этого сайта.'],
+      'auth/not-configured': ['#socialErr', 'Вход через Google недоступен: сервис авторизации не подключён.'],
+      'auth/operation-not-supported-in-this-environment': ['#socialErr', 'Вход через Google не работает при открытии файла с диска. Откройте сайт по адресу https:// (например, на GitHub Pages) или http://localhost.']
+    };
+    const showErr = (err, fallbackId) => {
+      const c = (err && err.code) || '', m = ERR[c];
+      if (m) setMsg(m[0], m[1]); else setMsg(fallbackId, 'Не удалось выполнить действие' + (c ? ' (' + c + ')' : '') + '. Повторите позже.');
+    };
+
     const mode = () => ($('input[name="amode"]:checked') || {}).value || 'login';
     const syncMode = () => {
       const reg = mode() === 'register';
@@ -866,21 +994,20 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       $('#forgotBtn').hidden = reg;
       $('#forgotForm').hidden = true;
       $('#authHint').textContent = reg
-        ? 'Почта-логин уникальна: на одну почту приходится один кабинет. На неё же приходит ссылка для восстановления пароля.'
+        ? 'Почта-логин уникальна: на одну почту приходится один кабинет. После регистрации на неё придёт ссылка для подтверждения: без неё кабинет не откроется.'
         : 'Вход не даёт права публиковать вакансии: нужно подтвердить УНП организации.';
-      setMsg('#authEmailErr', ''); setMsg('#authPassErr', '');
+      setMsg('#authEmailErr', ''); setMsg('#authPassErr', ''); setMsg('#socialErr', '');
     };
     $$('input[name="amode"]').forEach(r => r.addEventListener('change', syncMode));
     syncMode();
 
-    const social = provider => {
-      const email = 'demo.' + provider + '@hrhub.test', list = accounts();
-      if (!list.some(a => a.email === email)) { list.push({ email, provider, hash: '', verified: false, created: Date.now() }); write(KEYS.acc, list); }
-      write(KEYS.ses, email);
-      render();
-    };
-    $('#btnGoogle').addEventListener('click', () => social('google'));
-    $('#btnYandex').addEventListener('click', () => social('yandex'));
+    $('#btnGoogle').addEventListener('click', async () => {
+      setMsg('#socialErr', '');
+      try { await authApi.google(); } catch (err) {
+        if (err && (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request')) return;
+        showErr(err, '#socialErr');
+      }
+    });
 
     $('#authForm').addEventListener('submit', async e => {
       e.preventDefault();
@@ -888,27 +1015,63 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       setMsg('#authEmailErr', ''); setMsg('#authPassErr', '');
       if (!EMAIL_RE.test(email)) { setMsg('#authEmailErr', 'Введите корректную почту-логин.'); $('#authEmail').focus(); return; }
       if (pw.length < 8) { setMsg('#authPassErr', 'Пароль должен быть не короче 8 символов.'); $('#authPass').focus(); return; }
-      const list = accounts(), found = list.find(a => a.email === email), hash = await hashPw(email, pw);
-      if (reg) {
-        if (found) { setMsg('#authEmailErr', 'Кабинет с такой почтой-логином уже существует. Войдите или восстановите пароль через эту почту.'); $('#authEmail').focus(); return; }
-        list.push({ email, hash, provider: 'email', verified: false, created: Date.now() });
-        write(KEYS.acc, list);
-      } else if (!found || !found.hash || found.hash !== hash) {
-        setMsg('#authPassErr', 'Неверная почта или пароль.'); return;
-      }
-      write(KEYS.ses, email);
-      $('#authForm').reset();
-      render();
+      $('#authSubmit').disabled = true;
+      try {
+        if (reg) await authApi.signUp(email, pw); else await authApi.signIn(email, pw);
+        $('#authForm').reset();
+      } catch (err) { showErr(err, '#authPassErr'); }
+      $('#authSubmit').disabled = false;
     });
 
     $('#forgotBtn').addEventListener('click', () => { $('#forgotForm').hidden = !$('#forgotForm').hidden; $('#fEmail').value = $('#authEmail').value.trim(); setMsg('#fDone', ''); });
-    $('#forgotForm').addEventListener('submit', e => {
+    $('#forgotForm').addEventListener('submit', async e => {
       e.preventDefault();
-      if (!EMAIL_RE.test($('#fEmail').value.trim())) { setMsg('#fErr', 'Введите почту-логин.'); return; }
+      const email = $('#fEmail').value.trim().toLowerCase();
+      setMsg('#fDone', '');
+      if (!EMAIL_RE.test(email)) { setMsg('#fErr', 'Введите почту-логин.'); return; }
       setMsg('#fErr', '');
-      setMsg('#fDone', 'Если кабинет с такой почтой-логином существует, ссылка для сброса пароля будет отправлена на неё (в прототипе письма не отправляются). Публичные контакты компании для восстановления не используются.');
+      try { await authApi.reset(email); } catch (err) {
+        const c = (err && err.code) || '';
+        if (c !== 'auth/user-not-found' && c !== 'auth/invalid-email') { showErr(err, '#fErr'); if (ERR[c] && ERR[c][0] !== '#fErr') { setMsg('#fErr', ERR[c][1]); setMsg(ERR[c][0], ''); } return; }
+      }
+      setMsg('#fDone', 'Если кабинет с такой почтой-логином существует, ссылка для сброса пароля отправлена на неё' +
+        (authApi.mode === 'demo' ? ' (в демо-режиме письма не отправляются)' : '') + '. Публичные контакты компании для восстановления не используются.');
     });
-    $('#logout').addEventListener('click', () => { write(KEYS.ses, ''); render(); });
+
+    /* Подтверждение почты */
+    let resendTimer = null;
+    const coolDown = sec => {
+      clearInterval(resendTimer);
+      const btn = $('#mailResend');
+      btn.disabled = true;
+      let left = sec;
+      btn.textContent = 'Отправить ещё раз (' + left + ' с)';
+      resendTimer = setInterval(() => {
+        left -= 1;
+        if (left <= 0) { clearInterval(resendTimer); btn.disabled = false; btn.textContent = 'Отправить ссылку ещё раз'; } else btn.textContent = 'Отправить ещё раз (' + left + ' с)';
+      }, 1000);
+    };
+    $('#mailResend').addEventListener('click', async () => {
+      setMsg('#mailErr', ''); $('#mailStatus').textContent = '';
+      try { await authApi.resend(); $('#mailStatus').textContent = authApi.mode === 'demo' ? 'Демо-режим: письмо не отправлено.' : 'Ссылка отправлена повторно.'; coolDown(60); }
+      catch (err) { setMsg('#mailErr', (ERR[(err && err.code) || ''] || [0, 'Не удалось отправить ссылку. Повторите позже.'])[1]); }
+    });
+    $('#mailCheck').addEventListener('click', async () => {
+      setMsg('#mailErr', ''); $('#mailStatus').textContent = '';
+      try {
+        await authApi.refresh();
+        const u = authApi.current();
+        if (u && !u.verified) setMsg('#mailErr', 'Почта пока не подтверждена. Перейдите по ссылке из письма и нажмите кнопку ещё раз.');
+      } catch (err) { setMsg('#mailErr', (ERR[(err && err.code) || ''] || [0, 'Не удалось проверить статус. Повторите позже.'])[1]); }
+    });
+    $('#mailDemo').addEventListener('click', async () => { if (authApi.simulateLink) await authApi.simulateLink(); });
+    window.addEventListener('focus', () => {
+      const u = authApi.current();
+      if (authApi.mode === 'firebase' && u && !u.verified) authApi.refresh().catch(() => {});
+    });
+    $('#logout').addEventListener('click', async () => { await authApi.signOut(); });
+    authApi.onChange(() => { authReady = true; render(); });
+    if (authApi.mode === 'firebase') setTimeout(() => { if (!authReady) { authReady = true; render(); } }, 8000);
 
     /* ---- Верификация по УНП ---- */
     const TEMPLATES = [
@@ -1117,16 +1280,26 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
 
     /* ---- Какой экран показывать ---- */
     const render = () => {
-      const a = me();
-      $('#viewAuth').hidden = !!a;
-      $('#viewVerify').hidden = !(a && !a.verified);
-      $('#viewCabinet').hidden = !(a && a.verified);
-      $('#strip').hidden = !a;
-      if (!a) return;
+      const u = authApi.current(), a = me();
+      const waiting = !authReady;
+      $('#authLoading').hidden = !waiting;
+      $('#viewAuth').hidden = waiting || !!u;
+      $('#viewEmail').hidden = waiting || !(u && !u.verified);
+      $('#viewVerify').hidden = waiting || !(a && !a.verified);
+      $('#viewCabinet').hidden = waiting || !(a && a.verified);
+      $('#strip').hidden = waiting || !u;
+      if (waiting || !u) return;
+      $('#stEmail').textContent = u.email + (u.provider === 'google' ? ' (Google)' : '');
+      if (!u.verified) {
+        $('#stOrg').textContent = 'Кабинет не активирован';
+        $('#stBadge').textContent = 'Почта не подтверждена';
+        $('#stBadge').className = 'badge wait';
+        $('#mailTo').textContent = u.email;
+        return;
+      }
       $('#stOrg').textContent = a.verified ? a.org : 'Организация не подтверждена';
       $('#stBadge').textContent = a.verified ? 'УНП верифицирован' : 'УНП не подтверждён';
       $('#stBadge').className = 'badge ' + (a.verified ? 'ok' : 'wait');
-      $('#stEmail').textContent = a.email + (a.provider && a.provider !== 'email' ? ' (' + (a.provider === 'google' ? 'Google' : 'Яндекс') + ')' : '');
       if (a.verified) { renderContacts(); renderPreview(); renderList(); }
     };
 
