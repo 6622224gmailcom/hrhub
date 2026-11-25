@@ -491,7 +491,7 @@ ul,ol{margin:0;padding:0;list-style:none}
             ? '<div class="note-box' + (openNote ? ' is-open' : '') + '"><span class="note-text" title="' + esc(note) + '">' + (h.note ? highlight(note, toks) : esc(note)) + '</span>' +
               '<button type="button" class="more" aria-expanded="' + openNote + '" aria-label="Показать полное пояснение"' + (openNote ? '' : ' hidden') + '>' + (openNote ? 'свернуть ▴' : 'ещё ▾') + '</button></div>'
             : '—') + '</td>' +
-          '<td data-label="Быстрые ссылки"><div class="qlinks"><a href="catalog.html">Найти вакансии</a><a href="' + esc(link) + '">Разместить вакансию</a></div></td></tr>';
+          '<td data-label="Быстрые ссылки"><div class="qlinks"><a href="' + esc('catalog.html?code=' + encodeURIComponent(x.code)) + '">Найти вакансии</a><a href="' + esc(link) + '">Разместить вакансию</a></div></td></tr>';
       });
       rowsEl.innerHTML = html;
       markTruncated();
