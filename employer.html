@@ -401,12 +401,13 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
           <p class="field-error" id="vUnpErr" hidden></p>
         </div>
         <div class="req" id="reqBox" hidden>
+          <p class="badge wait" style="margin:0 0 12px">Тестовые данные: это не реальная организация</p>
           <dl>
             <div><dt>Наименование</dt><dd id="reqOrg"></dd></div>
             <div><dt>Адрес</dt><dd id="reqAddr"></dd></div>
             <div><dt>Регион</dt><dd id="reqRegion"></dd></div>
           </dl>
-          <p class="note" style="margin:0">Реквизиты подставлены по тестовому шаблону. Подключение реестра РБ запланировано: в рабочей версии данные придут из реестра.</p>
+          <p class="note" style="margin:0">Реквизиты подставлены по тестовому шаблону и не относятся к вашей организации. Подключение реестра РБ запланировано: в рабочей версии наименование и адрес придут из ЕГР. <a href="https://egr.gov.by" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600">Проверить УНП на egr.gov.by</a></p>
         </div>
         <fieldset class="group">
           <legend>Ответственное лицо и документ</legend>
@@ -577,6 +578,12 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         <p class="note">Вакансии хранятся только в этом браузере.</p>
       </section>
     </div>
+
+    <section class="panel" id="paid-options" aria-labelledby="paid-title">
+      <h2 class="panel-title" id="paid-title">Платные опции</h2>
+      <p>Публикация вакансий и резюме в каталоге бесплатна. Платные опции нужны только тем, кто хочет ускорить поиск, и появятся после запуска сервиса.</p>
+      <p class="note">Перечень и стоимость мы опубликуем заранее, до включения. Подбор «под ключ» и Тест-драйв специалиста согласуются отдельно, условия закрепляются договором. Подробнее — на странице <a href="about.html#test-drive" style="color:var(--accent);font-weight:600">«О проекте»</a>.</p>
+    </section>
 
   </div>
 </section>
@@ -1074,20 +1081,13 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     if (authApi.mode === 'firebase') setTimeout(() => { if (!authReady) { authReady = true; render(); } }, 8000);
 
     /* ---- Верификация по УНП ---- */
-    const TEMPLATES = [
-      { org: 'ООО «Тест-Компания»', addr: 'г. Минск, ул. Тестовая, 1, оф. 12', region: 'г. Минск' },
-      { org: 'ЗАО «Нордтрейд-Тест»', addr: 'г. Брест, пр. Республики, 5', region: 'Брестская область' },
-      { org: 'ООО «Гомельснаб-Тест»', addr: 'г. Гомель, ул. Советская, 10', region: 'Гомельская область' },
-      { org: 'ЧУП «Гродно-Сервис-Тест»', addr: 'г. Гродно, ул. Ожешко, 3', region: 'Гродненская область' },
-      { org: 'ООО «Витебск-Консалт-Тест»', addr: 'г. Витебск, ул. Ленина, 7', region: 'Витебская область' }
-    ];
     const unpOwner = unp => accounts().find(a => a.verified && a.unp === unp);
     const checkUnp = () => {
       const a = me(), v = $('#vUnp').value;
       const owner = v.length === 9 ? unpOwner(v) : null;
       const taken = owner && (!a || owner.email !== a.email);
       setMsg('#vUnpErr', taken ? 'Этот УНП уже привязан к другому кабинету. Правило «1 УНП = 1 кабинет»: второй кабинет создать нельзя.' : '');
-      const t = v.length === 9 && !taken ? TEMPLATES[Number(v) % TEMPLATES.length] : null;
+      const t = v.length === 9 && !taken ? { org: 'Тестовая организация, УНП ' + v, addr: 'Адрес подставится из реестра ЕГР после его подключения', region: 'Регион подставится из реестра ЕГР' } : null;
       $('#reqBox').hidden = !t;
       if (t) { $('#reqOrg').textContent = t.org; $('#reqAddr').textContent = t.addr; $('#reqRegion').textContent = t.region; }
       return { taken, t };
