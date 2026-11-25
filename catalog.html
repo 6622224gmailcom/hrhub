@@ -991,6 +991,11 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       if (job) { rJob.reset(false); rJob.select(OKRB.indexOf(job.data)); }
     });
 
+    /* Переход из справочника: catalog.html?code=2411-003 сразу выбирает должность */
+    const qCode = new URLSearchParams(window.location.search).get('code');
+    const qIdx = qCode ? OKRB.findIndex(x => x.code === qCode) : -1;
+    if (qIdx !== -1) (window.location.hash === '#resume' ? rJob : fJob).select(qIdx);
+
     render();
     showTab(window.location.hash === '#resume' ? 'resume' : 'search', true);
   };
