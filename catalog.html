@@ -214,6 +214,30 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
 .modal-box .sub{margin:6px 0 20px;color:var(--muted);font-size:.95rem}
 .modal-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
 .done-title{font-size:1.15rem;font-weight:600}
+.badge{display:inline-block;margin-left:10px;padding:3px 12px;border-radius:999px;font-size:.8rem;font-weight:600;vertical-align:middle}
+.badge.ok{background:var(--accent-soft);color:var(--accent-hover)}
+.badge.wait{background:var(--line);color:var(--muted)}
+.vac-tags{display:flex;flex-wrap:wrap;gap:6px}
+.vac-desc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0 0 16px;color:var(--muted);font-size:.93rem}
+.co{margin:0 0 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.co summary{padding:11px 16px;font-size:.93rem;font-weight:600;cursor:pointer;list-style:none}
+.co summary::-webkit-details-marker{display:none}
+.co summary::after{content:" ▾";color:var(--muted)}
+.co[open] summary::after{content:" ▴"}
+.co-body{padding:0 16px 14px}
+.co-head{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0}
+.co-addr{margin-top:4px;color:var(--muted);font-size:.9rem}
+.co-links{display:grid;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.co-links li{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:.92rem}
+.co-links span{min-width:68px;color:var(--muted)}
+.co-links em{font-style:normal;color:var(--muted)}
+.co-links a{color:var(--accent);font-weight:600;text-decoration:none;word-break:break-all}
+.co-links a:hover{color:var(--accent-hover);text-decoration:underline}
+.locked-box{margin:0 0 16px;padding:13px 16px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:.92rem}
+.locked-box a{color:var(--accent);font-weight:600}
+.contact-open{margin:0 0 16px;padding:13px 16px;border:1px solid var(--accent);border-radius:14px;background:var(--accent-soft);font-size:.93rem}
+.contact-open a{color:var(--accent-hover);font-weight:600;word-break:break-all}
+.pr-extra{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
 @media (max-width:720px){.filters{grid-template-columns:1fr}.tab{padding:12px 14px;font-size:.95rem}}
 
 /* ===== 7. Подвал ===== */
@@ -278,6 +302,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
               <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <ul class="dropdown" id="menu-employers">
+              <li><a href="catalog.html#profiles">Найти сотрудника</a></li>
               <li><a href="employer.html#post-vacancy">Разместить вакансию бесплатно</a></li>
               <li><a href="employer.html#turnkey">Подбор «под ключ»</a></li>
               <li><a href="employer.html#test-drive">Тест-драйв специалиста</a></li>
@@ -310,6 +335,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     <div class="tabs" role="tablist" aria-label="Разделы каталога">
       <button class="tab" role="tab" type="button" id="tab-search" aria-controls="panel-search" aria-selected="true">Поиск вакансий</button>
       <button class="tab" role="tab" type="button" id="tab-resume" aria-controls="panel-resume" aria-selected="false" tabindex="-1">Разместить резюме</button>
+      <button class="tab" role="tab" type="button" id="tab-profiles" aria-controls="panel-profiles" aria-selected="false" tabindex="-1">Резюме соискателей</button>
     </div>
 
     <div id="panel-search" role="tabpanel" aria-labelledby="tab-search">
@@ -454,6 +480,44 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         <p class="submit-note">Без облачного хранения персональных данных: проверка документов для ПУ-2/ФСЗН проводится только при финальном оформлении с мгновенным удалением файлов.</p>
         <p class="status-ok" id="rStatus" role="status"></p>
       </form>
+    </div>
+
+    <div id="panel-profiles" role="tabpanel" aria-labelledby="tab-profiles" hidden>
+      <div class="panel filters">
+        <p class="plate span2" id="pvNote"></p>
+        <div class="field span2">
+          <label class="label" for="pJobInput">Профессия / должность (по ОКРБ 014-2017)</label>
+          <div class="combo" id="comboPJob">
+            <div class="combo-box">
+              <input id="pJobInput" type="text" placeholder="Например, рекл менед" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="pJobList" aria-autocomplete="list">
+              <span class="combo-code" hidden></span>
+              <button class="link-btn combo-reset" type="button" hidden>Сбросить</button>
+            </div>
+            <ul class="combo-list" id="pJobList" role="listbox" aria-label="Список" hidden></ul>
+            <p class="combo-note" aria-live="polite">Выберите должность из справочника: вводить свой вариант нельзя.</p>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="pFormatLabel">Формат работы</span>
+          <div class="seg" role="radiogroup" aria-labelledby="pFormatLabel">
+            <label class="seg-opt"><input type="radio" name="pformat" value="all" checked><span>Все форматы</span></label>
+            <label class="seg-opt"><input type="radio" name="pformat" value="remote"><span>Удалённо</span></label>
+            <label class="seg-opt"><input type="radio" name="pformat" value="hybrid"><span>Гибрид</span></label>
+            <label class="seg-opt"><input type="radio" name="pformat" value="office"><span>Офис</span></label>
+          </div>
+        </div>
+        <label class="switch" style="margin-bottom:8px">
+          <input type="checkbox" id="pTestDrive">
+          <span class="switch-track" aria-hidden="true"></span>
+          <span><strong>Только готовые к Тест-драйву</strong><small>Соискатели, согласные на пробный период 1 месяц</small></span>
+        </label>
+      </div>
+      <div class="results-head">
+        <p class="results-count" id="pCount" aria-live="polite"></p>
+        <p class="results-note">Резюме из этого браузера и демонстрационные примеры.</p>
+      </div>
+      <div class="vac-grid" id="pGrid"></div>
+      <div class="empty" id="pEmpty" hidden><p>Подходящих резюме пока нет.</p></div>
     </div>
   </div>
 </section>
@@ -780,7 +844,8 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     };
 
     /* Вкладки */
-    const tabs = { search: [$('#tab-search'), $('#panel-search')], resume: [$('#tab-resume'), $('#panel-resume')] };
+    const tabs = { search: [$('#tab-search'), $('#panel-search')], resume: [$('#tab-resume'), $('#panel-resume')], profiles: [$('#tab-profiles'), $('#panel-profiles')] };
+    const tabFromHash = () => ({ '#resume': 'resume', '#profiles': 'profiles' }[window.location.hash] || 'search');
     const showTab = (name, silent) => {
       Object.keys(tabs).forEach(k => {
         const on = k === name;
@@ -789,26 +854,27 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         tabs[k][1].hidden = !on;
       });
       if (silent) return;
-      try { window.history.replaceState(null, '', name === 'resume' ? '#resume' : window.location.pathname + window.location.search); } catch (e) {}
+      try { window.history.replaceState(null, '', name === 'search' ? window.location.pathname + window.location.search : '#' + name); } catch (e) {}
     };
     const goTab = name => { showTab(name); $('.tabs').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
     Object.keys(tabs).forEach(k => {
       tabs[k][0].addEventListener('click', () => showTab(k));
       tabs[k][0].addEventListener('keydown', e => {
         if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-        const next = k === 'search' ? 'resume' : 'search';
+        const order = Object.keys(tabs), next = order[(order.indexOf(k) + (e.key === 'ArrowRight' ? 1 : order.length - 1)) % order.length];
         showTab(next);
         tabs[next][0].focus();
       });
     });
-    $$('a[href="catalog.html"], a[href="catalog.html#resume"]').forEach(a => a.addEventListener('click', e => {
+    $$('a[href="catalog.html"], a[href="catalog.html#resume"], a[href="catalog.html#profiles"]').forEach(a => a.addEventListener('click', e => {
       e.preventDefault();
-      goTab(a.getAttribute('href').endsWith('#resume') ? 'resume' : 'search');
+      const h = a.getAttribute('href');
+      goTab(h.endsWith('#resume') ? 'resume' : h.endsWith('#profiles') ? 'profiles' : 'search');
     }));
-    window.addEventListener('hashchange', () => showTab(window.location.hash === '#resume' ? 'resume' : 'search', true));
+    window.addEventListener('hashchange', () => showTab(tabFromHash(), true));
 
     /* Вкладка 1: поиск вакансий */
-    const VACANCIES = [
+    const DEMO_VACANCIES = [
       { id: 'v1', headline: 'Бухгалтер, ведение УСН', code: '2411-003', format: 'remote', city: '', td: true },
       { id: 'v2', headline: 'Бухгалтер по первичной документации и кассе', code: '3313-001', format: 'hybrid', city: 'Минск', td: true },
       { id: 'v3', headline: 'Главный бухгалтер для небольшой компании', code: '1211-002', format: 'hybrid', city: 'Гродно', td: true },
@@ -819,10 +885,37 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       { id: 'v8', headline: 'Специалист по работе с клиентами', code: '2432-002', format: 'remote', city: '', td: true },
       { id: 'v9', headline: 'Экономист на производственное предприятие', code: '2631-015', format: 'office', city: 'Гомель', td: false }
     ];
+    const readJson = (k, def) => { try { const v = JSON.parse(window.localStorage.getItem(k)); return v === null || v === undefined ? def : v; } catch (e) { return def; } };
+    const allAccounts = () => { const a = readJson('hrhub.accounts', []); return Array.isArray(a) ? a : []; };
+    const viewer = () => { const e = readJson('hrhub.session', ''), a = allAccounts().find(x => x.email === e); return a && a.verified && a.emailVerified !== false ? a : null; };
+    const money = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0');
+    const userVacancies = () => { const a = readJson('hrhub.vacancies', []); return (Array.isArray(a) ? a : []).map(v => ({
+      id: 'u' + v.id, headline: v.title, code: v.code, format: v.format, city: v.format === 'remote' ? '' : v.geo, td: !!v.testDrive, own: true, owner: v.owner,
+      pay: v.salaryTo ? money(v.salaryFrom) + '–' + money(v.salaryTo) + ' BYN' : 'от ' + money(v.salaryFrom) + ' BYN', employment: v.employment, desc: v.desc })); };
+    const vacancies = () => userVacancies().concat(DEMO_VACANCIES);
+    const DEMO_CO = { org: 'Демонстрационная организация', addr: 'Здесь будет адрес организации из реестра',
+      c: { emails: ['jobs@example.by'], phones: ['+375170000000'], telegram: ['@example_hr'], viber: [], site: 'https://example.by' } };
+    const companyHtml = v => {
+      let co = null;
+      if (v.own) { const a = allAccounts().find(x => x.email === v.owner); if (a && a.verified) co = { org: a.org, addr: a.addr, c: a.contacts, demo: false }; } else co = Object.assign({ demo: true }, DEMO_CO);
+      if (!co) return '';
+      const c = Object.assign({ emails: [], phones: [], telegram: [], viber: [], site: '' }, co.c), items = [];
+      c.emails.forEach(x => items.push(['Почта', x, 'mailto:' + x]));
+      c.phones.forEach(x => items.push(['Телефон', x, 'tel:' + x]));
+      c.telegram.forEach(x => items.push(['Telegram', x, 'https://t.me/' + x.slice(1)]));
+      c.viber.forEach(x => items.push(['Viber', x, 'viber://chat?number=' + encodeURIComponent(x)]));
+      if (c.site) items.push(['Сайт', c.site.replace(/^https?:\/\//, ''), c.site]);
+      const li = it => '<li><span>' + it[0] + '</span>' + (co.demo ? '<em>' + esc(it[1]) + '</em>'
+        : '<a href="' + esc(it[2]) + '"' + (/^https?:/.test(it[2]) ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + esc(it[1]) + '</a>') + '</li>';
+      return '<details class="co"><summary>О компании и контакты</summary><div class="co-body"><div class="co-head"><strong>' + esc(co.org) + '</strong>' +
+        '<span class="badge ' + (co.demo ? 'wait' : 'ok') + '">' + (co.demo ? 'Пример карточки' : 'УНП верифицирован') + '</span></div>' +
+        '<p class="co-addr">' + esc(co.addr) + '</p>' +
+        (items.length ? '<ul class="co-links">' + items.map(li).join('') + '</ul>' : '<p class="co-addr">Публичные контакты не добавлены: откликнуться можно через hrhub.by.</p>') + '</div></details>';
+    };
     let fJob, fCity;
     const render = () => {
       const job = fJob.get(), city = fCity.get(), f = checked('fformat'), td = $('#fTestDrive').checked;
-      const rows = VACANCIES.filter(v => (!job || v.code === job.data.code) && (f === 'all' || v.format === f) &&
+      const rows = vacancies().filter(v => (!job || v.code === job.data.code) && (f === 'all' || v.format === f) &&
         (!city || v.format === 'remote' || v.city === city.text) && (!td || v.td));
       const fact = (k, v) => '<div><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>';
       $('#resCount').textContent = rows.length ? 'Найдено: ' + rows.length + ' ' + plural(rows.length) : 'Вакансий не найдено';
@@ -832,8 +925,9 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         const x = byCode(v.code);
         return '<article class="vac"><h3>' + esc(v.headline) + '</h3><dl>' +
           fact('Должность по ОКРБ', x ? x.title + ' · ' + x.code : v.code) + fact('Формат работы', FORMATS[v.format]) +
-          fact('География', v.format === 'remote' ? 'Вся Беларусь' : v.city) + '</dl><div class="vac-foot">' +
-          (v.td ? '<span class="tag">Тест-драйв 1 мес.</span>' : '<span></span>') +
+          fact('География', v.format === 'remote' ? 'Вся Беларусь' : v.city) + (v.pay ? fact('Зарплата', v.pay) : '') + (v.employment ? fact('Занятость', v.employment) : '') + '</dl>' +
+          (v.desc ? '<p class="vac-desc">' + esc(v.desc) + '</p>' : '') + companyHtml(v) + '<div class="vac-foot">' +
+          '<span class="vac-tags">' + (v.td ? '<span class="tag">Тест-драйв 1 мес.</span>' : '') + (v.own ? '<span class="tag">Из кабинета</span>' : '') + '</span>' +
           '<button type="button" class="btn btn-primary btn-sm" data-apply="' + esc(v.id) + '">Откликнуться</button></div></article>';
       }).join('');
     };
@@ -872,7 +966,7 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
       const b = e.target.closest('[data-apply]');
       if (!b) return;
       lastFocus = b;
-      openModal(VACANCIES.find(v => v.id === b.dataset.apply));
+      openModal(vacancies().find(v => v.id === b.dataset.apply));
     });
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
     $('#applyCancel').addEventListener('click', closeModal);
@@ -984,6 +1078,50 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
         (saved ? '' : ' Хранилище браузера недоступно: данные сохранятся только до перезагрузки страницы.');
     });
 
+    /* Вкладка 3: резюме соискателей (контакты видны только организациям с подтверждённым УНП) */
+    const DEMO_PROFILES = [
+      { id: 'p1', code: '2411-003', extras: ['3313-001'], format: 'remote', city: '', td: true, contact: '+375290000001', demo: true,
+        about: 'Семь лет опыта в бухгалтерском учёте: УСН, первичная документация, 1С и Excel. Работаю удалённо с малым бизнесом.' },
+      { id: 'p2', code: '2423-003', extras: ['1212-004'], format: 'hybrid', city: 'Минск', td: true, contact: '@demo_hr_profile', demo: true,
+        about: 'Кадровое делопроизводство и подбор персонала: приём, увольнение, личные дела, адаптация новых сотрудников.' },
+      { id: 'p3', code: '2619-023', extras: [], format: 'hybrid', city: 'Гродно', td: false, contact: 'demo.lawyer@example.by', demo: true,
+        about: 'Договорная работа, претензии и правовая экспертиза документов для небольших компаний.' }
+    ];
+    const profiles = () => {
+      const a = readJson('hrhub.resumes', []);
+      const own = (Array.isArray(a) ? a : []).map((r, i) => ({ id: 'r' + i, code: r.job.code, extras: (r.extras || []).map(x => x.code), format: r.format,
+        city: r.format === 'remote' ? '' : r.city, td: !!r.testDrive, contact: r.contact, about: r.about, own: true }));
+      return own.concat(DEMO_PROFILES);
+    };
+    const contactLink = c => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c) ? 'mailto:' + c : /^@/.test(c) ? 'https://t.me/' + c.slice(1) : 'tel:' + c.replace(/[^\d+]/g, '');
+    let pJob;
+    const renderProfiles = () => {
+      const job = pJob.get(), f = checked('pformat'), td = $('#pTestDrive').checked, open = !!viewer();
+      $('#pvNote').textContent = open
+        ? 'Вы вошли как организация с подтверждённым УНП: контакты в резюме открыты.'
+        : 'Профили открыты для просмотра без регистрации. Контакты соискателей доступны организациям, прошедшим вход и подтверждение УНП.';
+      const rows = profiles().filter(p => (!job || p.code === job.data.code || p.extras.indexOf(job.data.code) !== -1) && (f === 'all' || p.format === f) && (!td || p.td));
+      const fact = (k, v) => '<div><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>';
+      $('#pCount').textContent = rows.length ? 'Найдено резюме: ' + rows.length : 'Резюме не найдено';
+      $('#pGrid').hidden = !rows.length;
+      $('#pEmpty').hidden = !!rows.length;
+      $('#pGrid').innerHTML = rows.map(p => {
+        const x = byCode(p.code), ex = p.extras.map(byCode).filter(Boolean);
+        const contact = open
+          ? '<p class="contact-open">Контакт: ' + (p.demo ? esc(p.contact) + ' (пример)' : '<a href="' + esc(contactLink(p.contact)) + '">' + esc(p.contact) + '</a>') + '</p>'
+          : '<p class="locked-box">Контакты видны организациям с подтверждённым УНП. <a href="employer.html">Войти в кабинет работодателя</a></p>';
+        return '<article class="vac"><h3>' + esc(x ? x.title : p.code) + '</h3><dl>' + fact('Код ОКРБ', p.code) + fact('Формат работы', FORMATS[p.format]) +
+          fact('География', p.format === 'remote' ? 'Вся Беларусь' : p.city) + '</dl>' +
+          (ex.length ? '<div class="pr-extra">' + ex.map(e => '<span class="tag">Смежная: ' + esc(e.title) + '</span>').join('') + '</div>' : '') +
+          '<p class="vac-desc">' + esc(p.about) + '</p>' + contact + '<div class="vac-foot"><span class="vac-tags">' +
+          (p.td ? '<span class="tag">Готов к Тест-драйву</span>' : '') + '<span class="tag">' + (p.demo ? 'Пример профиля' : 'Резюме из этого браузера') + '</span></span></div></article>';
+      }).join('');
+    };
+    pJob = makeCombo($('#comboPJob'), jobItems, { missing: MISS_JOB, detail, onChange: renderProfiles });
+    $$('input[name="pformat"]').forEach(r => r.addEventListener('change', renderProfiles));
+    $('#pTestDrive').addEventListener('change', renderProfiles);
+    window.addEventListener('storage', () => { render(); renderProfiles(); });
+
     /* Пустой результат -> резюме с подставленной должностью */
     $('#toResume').addEventListener('click', () => {
       const job = fJob.get();
@@ -994,10 +1132,11 @@ textarea.inp{min-height:130px;resize:vertical;font-weight:400}
     /* Переход из справочника: catalog.html?code=2411-003 сразу выбирает должность */
     const qCode = new URLSearchParams(window.location.search).get('code');
     const qIdx = qCode ? OKRB.findIndex(x => x.code === qCode) : -1;
-    if (qIdx !== -1) (window.location.hash === '#resume' ? rJob : fJob).select(qIdx);
+    if (qIdx !== -1) (window.location.hash === '#resume' ? rJob : window.location.hash === '#profiles' ? pJob : fJob).select(qIdx);
 
     render();
-    showTab(window.location.hash === '#resume' ? 'resume' : 'search', true);
+    renderProfiles();
+    showTab(tabFromHash(), true);
   };
   let booted = false;
   const boot = () => { if (!booted) { booted = true; initCatalog(); } };
